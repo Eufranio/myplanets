@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
+
+  final FirebaseUser currentUser;
+
+  MainScreen(this.currentUser);
+
+  @override
+  _MainScreenState createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     var description = Text(
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus augue odio, suscipit vitae pharetra vel, malesuada eu enim. Phasellus ut dui vel quam vulputate pretium. Nullam suscipit neque est. Cras consequat porta pellentesque. Pellentesque eget tincidunt enim',
+      //'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus augue odio, suscipit vitae pharetra vel, malesuada eu enim. Phasellus ut dui vel quam vulputate pretium. Nullam suscipit neque est. Cras consequat porta pellentesque. Pellentesque eget tincidunt enim',
+      'Bem vindo ${widget.currentUser.email}',
       style: TextStyle(fontSize: 20, color: Colors.white),
       textAlign: TextAlign.center,
     );

@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'login.dart';
 import 'menu.dart';
+import 'AuthService.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(
+    ChangeNotifierProvider<AuthService>(
+        child: MyApp(),
+        create: (BuildContext context) => AuthService()
+    )
+);
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -14,7 +22,24 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.purple,
         fontFamily: 'Montserrat',
       ),
-      home: LoginScreen(),
+      home: FutureBuilder(
+        future: Provider.of<AuthService>(context).getUser(),
+        builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.error != null) {
+              print("error");
+              return Text(snapshot.error.toString());
+            }
+            return snapshot.hasData ? MainScreen(snapshot.data) : LoginScreen();
+          }
+          return Center(
+            child: Container(
+              child: CircularProgressIndicator(),
+              alignment: Alignment(0.0, 0.0),
+            ),
+          );
+        }
+      ),
     );
   }
 }

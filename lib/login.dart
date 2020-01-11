@@ -1,6 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:planets/AuthService.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+
+  final _formKey = GlobalKey<FormState>();
+  String _password;
+  String _email;
+
   @override
   Widget build(BuildContext context) {
     TextStyle style = TextStyle(
@@ -9,8 +22,9 @@ class LoginScreen extends StatelessWidget {
         fontWeight: FontWeight.bold
     );
 
-    var emailField = TextField(
-      obscureText: false,
+    var emailField = TextFormField(
+      onSaved: (value) => _email = value,
+      keyboardType: TextInputType.emailAddress,
       style: style,
       textAlign: TextAlign.center,
       decoration: InputDecoration(
@@ -21,7 +35,8 @@ class LoginScreen extends StatelessWidget {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
 
-    var passwordField = TextField(
+    var passwordField = TextFormField(
+        onSaved: (value) => _password = value,
         obscureText: true,
         style: style,
         textAlign: TextAlign.center,
@@ -38,7 +53,24 @@ class LoginScreen extends StatelessWidget {
       color: Colors.deepPurple[700],
       child: Text('Login', style: style),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      onPressed: () {},
+      onPressed: () async {
+        final form = _formKey.currentState;
+        form.save();
+
+        // Validate will return true if is valid, or false if invalid.
+        try {
+          FirebaseUser result =
+              await Provider.of<AuthService>(context, listen: false).loginUser(
+              email: _email, password: _password);
+          print(result);
+        } on AuthException catch (error) {
+          // handle the firebase specific error
+          return _buildErrorDialog(context, error.message);
+        } on Exception catch (error) {
+          // gracefully handle anything else that might happen..
+          return _buildErrorDialog(context, error.toString());
+        }
+      },
     );
 
     var forgotPassword = FlatButton(
@@ -58,6 +90,8 @@ class LoginScreen extends StatelessWidget {
           constraints: BoxConstraints.expand(),
           child: SingleChildScrollView(
             child: Center(
+              child: Form(
+                key: _formKey,
                 child: Column(
                   children: <Widget>[
                     SizedBox(height: 80),
@@ -108,49 +142,30 @@ class LoginScreen extends StatelessWidget {
                       child: button,
                     ),
                     SizedBox(height: 30)
-                    /*Expanded(
-                      child: Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            SizedBox(
-                              height: 55,
-                              width: 280,
-                              child: emailField,
-                            ),
-                            SizedBox(height: 30),
-                            SizedBox(
-                                height: 55,
-                                width: 280,
-                                child: passwordField
-                            ),
-                            SizedBox(
-                              width: 310,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  forgotPassword
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 30),
-                            SizedBox(
-                              width: 200,
-                              height: 50,
-                              child: button,
-                            ),
-                            SizedBox(height: 30)
-                          ],
-                        ),
-                      ),
-                    ),*/
                   ],
-                )
+                ),),
             ),
           ),
         )
     );
   }
+}
+
+Future _buildErrorDialog(BuildContext context, _message) {
+  return showDialog(
+    builder: (context) {
+      return AlertDialog(
+        title: Text('Error Message'),
+        content: Text(_message),
+        actions: <Widget>[
+          FlatButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              })
+        ],
+      );
+    },
+    context: context,
+  );
 }
