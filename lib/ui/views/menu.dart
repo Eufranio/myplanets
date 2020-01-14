@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:planets/AuthService.dart';
 
 class MainScreen extends StatefulWidget {
 
@@ -46,7 +48,9 @@ class _MainScreenState extends State<MainScreen> {
         heightFactor: 3.5,
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pushNamed(context, '/listEntities');
+      },
     );
 
     var accountButton = RaisedButton(
@@ -60,6 +64,14 @@ class _MainScreenState extends State<MainScreen> {
       onPressed: () {},
     );
 
+    var logoutButton = IconButton(
+      color: Colors.white,
+      icon: Icon(Icons.exit_to_app),
+      onPressed: () async {
+        await Provider.of<AuthService>(context, listen: false).logout();
+      },
+    );
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -70,7 +82,16 @@ class _MainScreenState extends State<MainScreen> {
         ),
         child: Column(
           children: <Widget>[
-            SizedBox(height: 340),
+            SizedBox(
+                height: 340,
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 40, left: 10),
+                    child: logoutButton
+                  ),
+                )
+            ),
             Expanded(
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 50),
