@@ -155,8 +155,8 @@ class _ListEntitiesSpecificState<T extends CRUD> extends State<ListEntitiesSpeci
           ),
         ),
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (_) => model.getInfoScreen()));
-        },
+          Navigator.pushNamed(context, '/listEntities');
+          },
       ),
     );
   }
