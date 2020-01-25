@@ -1,5 +1,6 @@
 import 'model.dart';
 import 'package:flutter/material.dart';
+import 'package:planets/ui/views/info/planet_info.dart';
 
 class Planet extends Model {
 
@@ -32,12 +33,7 @@ class Planet extends Model {
 
   @override
   Widget getInfoScreen() {
-    return Material(
-      child: Scaffold(
-        body: Container(),
-      ),
-    );
+    return PlanetInfoScreen(planet: this);
   }
-
 
 }

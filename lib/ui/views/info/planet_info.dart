@@ -1,29 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:planets/core/viewmodels/planetModel.dart';
 
-void main() {
+class PlanetInfoScreen extends StatefulWidget {
 
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle());
+  final Planet planet;
 
+  PlanetInfoScreen({this.planet});
 
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        home: new LoginPage(),
-        theme: new ThemeData(primarySwatch: Colors.blue));
-  }
+  _PlanetInfoState createState() => _PlanetInfoState();
 }
 
-class LoginPage extends StatefulWidget {
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
+class _PlanetInfoState extends State<PlanetInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -39,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
               child: topButtons,
             ),
             Center(
-              child: planet_name,
+              child: planet_name(widget.planet),
             ),
             Container(
               width: 330,
@@ -68,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
                                       child: Align(
                                         alignment: Alignment.topCenter,
                                         child: Text(
-                                          '20',
+                                          widget.planet.size,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: Colors.deepPurple,
@@ -111,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                                       child: Align(
                                         alignment: Alignment.topCenter,
                                         child: Text(
-                                          '20',
+                                          widget.planet.weight,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: Colors.deepPurple,
@@ -154,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                                       child: Align(
                                         alignment: Alignment.topCenter,
                                         child: Text(
-                                          '10',
+                                          widget.planet.gravity,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: Colors.deepPurple,
@@ -194,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
-                        'A composição da superfície é fundamentalmente de basalto vulcânico com um alto conteúdo em óxidos de ferro que proporcionam o vermelho característico da superfície. Pela sua natureza, assemelha-se com a limonite, óxido de ferro muito hidratado',
+                        widget.planet.description,
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                     ),
@@ -228,7 +216,7 @@ Widget boxInfos = Container(
   ),
 );
 
-Widget planet_name = Container(
+Widget planet_name(Planet planet) => Container(
   width: 300,
   height: 300,
   child: Stack(
@@ -254,7 +242,7 @@ Widget planet_name = Container(
             child: Align(
               alignment: Alignment.topRight,
               child: Text(
-                "Planeta Terra",
+                planet.name,
                 textAlign: TextAlign.right,
                 style: TextStyle(
                   fontSize: 28.0,
