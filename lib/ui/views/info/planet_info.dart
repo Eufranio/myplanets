@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:planets/core/viewmodels/planetModel.dart';
+import 'package:planets/core/viewmodels/model.dart';
+
 
 class PlanetInfoScreen extends StatefulWidget {
 
@@ -22,16 +24,31 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
         ),
         child: Column(
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 15, 20, 00),
-              child: topButtons,
+            AppBar(
+                backgroundColor: Colors.transparent,
+                elevation: 0
+            ),
+            Container(
+              width: 360,
+              height: 25,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  width: 100,
+                  height: 25,
+                  color: Colors.transparent,
+                  child: edit,
+
+                ),
+              ),
             ),
             Center(
               child: planet_name(widget.planet),
             ),
+
             Container(
               width: 330,
-              height: 140,
+              height: 120,
               child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Row(
@@ -61,7 +78,7 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
                                           style: TextStyle(
                                               color: Colors.deepPurple,
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 25),
+                                              fontSize: 12),
                                         ),
                                       ),
                                     ),
@@ -104,7 +121,7 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
                                           style: TextStyle(
                                               color: Colors.deepPurple,
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 25),
+                                              fontSize: 12),
                                         ),
                                       ),
                                     ),
@@ -147,7 +164,7 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
                                           style: TextStyle(
                                               color: Colors.deepPurple,
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 25),
+                                              fontSize: 12),
                                         ),
                                       ),
                                     ),
@@ -180,11 +197,20 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
                   child: Align(
                     alignment: Alignment.topCenter,
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        widget.planet.description,
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ),
+                      padding: const EdgeInsets.all(0.0),
+                      child: Column(
+                        children: <Widget>[
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: info,
+                          ),
+                          Text(
+                            widget.planet.description,
+                            style: TextStyle(color: Colors.white, fontSize: 15),
+                          ),
+                        ],
+                      )
+
                     ),
                   ),
                 )),
@@ -195,20 +221,6 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
   }
 }
 
-Widget infoPlanetas = Center(
-  child: Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Container(
-      width: 60,
-      height: 60,
-      color: Colors.white.withOpacity(0.6),
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: Text('Tamanho'),
-      ),
-    ),
-  ),
-);
 
 Widget boxInfos = Container(
   child: Row(
@@ -240,7 +252,7 @@ Widget planet_name(Planet planet) => Container(
           child: Padding(
             padding: const EdgeInsets.all(2.0),
             child: Align(
-              alignment: Alignment.topRight,
+              alignment: Alignment.topCenter,
               child: Text(
                 planet.name,
                 textAlign: TextAlign.right,
@@ -258,42 +270,86 @@ Widget planet_name(Planet planet) => Container(
   ),
 );
 
-Widget infoButton = Container(
-  width: 50,
-  height: 50,
-  child: Column(
-    crossAxisAlignment: CrossAxisAlignment.center,
-    children: <Widget>[
-      Container(
-        color: Colors.blue,
-      ),
-      Container(
-        color: Colors.red,
-      ),
-    ],
-  ),
-);
 
-Widget topButtons =
-Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
-  backButton,
-  closeButton,
-]);
 
-Widget closeButton = IconButton(
+Widget info = IconButton(
   color: Colors.white,
   icon: Icon(
-    Icons.close,
-    size: 30,
+    Icons.info,
+    size: 20,
+  ),
+  onPressed: () {
+//    Navigator.push(context, MaterialPageRoute(
+//        builder: (_) => getNewPlanet(),
+//    ));
+  },
+);
+
+Widget edit = IconButton(
+  color: Colors.white,
+  icon: Icon(
+    Icons.edit,
+    size: 20,
   ),
   onPressed: () {},
 );
 
-Widget backButton = IconButton(
-  color: Colors.white,
-  icon: Icon(
-    Icons.arrow_back,
-    size: 30,
-  ),
-  onPressed: () {},
-);
+
+//
+//Widget infoButton = Container(
+//  width: 50,
+//  height: 50,
+//  child: Column(
+//    crossAxisAlignment: CrossAxisAlignment.center,
+//    children: <Widget>[
+//      Container(
+//        color: Colors.blue,
+//      ),
+//      Container(
+//        color: Colors.red,
+//      ),
+//    ],
+//  ),
+//);
+
+
+
+//Widget topButtons =
+//Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
+//  backButton,
+//  closeButton,
+//]);
+
+//
+//  Widget closeButton = IconButton(
+//    color: Colors.white,
+//    icon: Icon(
+//      Icons.close,
+//      size: 30,
+//    ),
+//    onPressed: () {},
+//  );
+//
+//  Widget backButton = IconButton(
+//    color: Colors.white,
+//    icon: Icon(
+//      Icons.arrow_back,
+//      size: 30,
+//    ),
+//    onPressed: () {},
+//  );
+//
+//Widget infoPlanetas = Center(
+//  child: Padding(
+//    padding: const EdgeInsets.all(8.0),
+//    child: Container(
+//      width: 60,
+//      height: 60,
+//      color: Colors.white.withOpacity(0.6),
+//      child: Align(
+//        alignment: Alignment.bottomCenter,
+//        child: Text('Tamanho'),
+//      ),
+//    ),
+//  ),
+//);

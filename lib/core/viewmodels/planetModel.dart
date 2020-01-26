@@ -1,6 +1,7 @@
 import 'model.dart';
 import 'package:flutter/material.dart';
 import 'package:planets/ui/views/info/planet_info.dart';
+import 'package:planets/ui/views/new_planet.dart';
 
 class Planet extends Model {
 
@@ -34,6 +35,10 @@ class Planet extends Model {
   @override
   Widget getInfoScreen() {
     return PlanetInfoScreen(planet: this);
+  }
+
+  Widget getNewPlanet() {
+    return EditPlanetScreen(planet: this);
   }
 
 }
