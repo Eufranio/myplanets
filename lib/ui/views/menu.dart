@@ -31,11 +31,26 @@ class _MainScreenState extends State<MainScreen> {
     );
 
     var createButton = RaisedButton(
+
       color: Colors.white,
-      child: Align(
-        child: Text('Criar', style: buttonStyle),
-        alignment: Alignment.bottomCenter,
-        heightFactor: 3.5,
+      child: Center(
+        child: Column(
+          children: <Widget>[
+            SizedBox(
+              height: 16,
+              width: 1,
+            ),
+            Container(
+              child: Icon(Icons.add_circle_outline, color: Colors.deepPurple,size: 30,),
+            ),
+
+            Align(
+              child: Text('Criar', style: buttonStyle),
+              alignment: Alignment.bottomCenter,
+              heightFactor: 1.5,
+            ),
+          ],
+        ),
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       onPressed: () {
@@ -47,10 +62,25 @@ class _MainScreenState extends State<MainScreen> {
 
     var listButton = RaisedButton(
       color: Colors.white,
-      child: Align(
+      child: Center(
+        child: Column(
+          children: <Widget>[
+          SizedBox(
+          height: 16,
+          width: 1,
+        ),
+        Container(
+          child: Icon(Icons.search, color: Colors.deepPurple,size: 32,),
+        ),
+
+        Align(
         child: Text('Listar', style: buttonStyle),
         alignment: Alignment.bottomCenter,
-        heightFactor: 3.5,
+        heightFactor: 1.5,
+
+        ),
+          ],
+        ),
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       onPressed: () {
@@ -60,10 +90,25 @@ class _MainScreenState extends State<MainScreen> {
 
     var accountButton = RaisedButton(
       color: Colors.white,
-      child: Align(
+
+      child: Center(
+        child: Column(
+          children: <Widget>[
+          SizedBox(
+          height: 16,
+          width: 1,
+        ),
+        Container(
+          child: Icon(Icons.person, color: Colors.deepPurple,size: 32,),
+        ),
+
+        Align(
         child: Text('Conta', style: buttonStyle),
         alignment: Alignment.bottomCenter,
-        heightFactor: 3.5,
+        heightFactor: 1.5,
+          ),
+          ],
+        ),
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       onPressed: () {},

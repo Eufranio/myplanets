@@ -14,6 +14,26 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
   @override
   Widget build(BuildContext context) {
 
+    showAlertDialog1(BuildContext context)
+    {
+      // configura o button
+
+      // configura o  AlertDialog
+      AlertDialog alerta = AlertDialog(
+        title: Text("Sistema: Via Láctea"),
+        content: Text("Orbitantes: \n - Lua \n - Satélite"),
+        actions: [
+        ],
+      );
+      // exibe o dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alerta;
+        },
+      );
+    }
+
     Widget edit = IconButton(
       color: Colors.white,
       icon: Icon(
@@ -33,7 +53,8 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
         Icons.info,
         size: 20,
       ),
-      onPressed: () {}
+      onPressed: () {showAlertDialog1(context);
+      }
     );
 
     return new Scaffold(
