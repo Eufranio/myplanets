@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:planets/core/viewmodels/planetModel.dart';
+import 'package:planets/ui/views/info/planet/planet_info.dart';
 
 class EditPlanetScreen extends StatefulWidget {
 
@@ -28,13 +29,13 @@ class _EditPlanetScreenState extends State<EditPlanetScreen> {
     );
 
     var nome = TextFormField(
-      keyboardType: TextInputType.emailAddress,
       style: style,
       textAlign: TextAlign.center,
+      initialValue: widget.planet?.name,
       decoration: InputDecoration(
           labelText: 'Nome',
           labelStyle: style2,
-          hintText: widget.planet.name,
+          hintText: 'Nome',
           hintStyle: style,
           fillColor: Colors.white.withOpacity(0.5),
           filled: true,
@@ -42,13 +43,13 @@ class _EditPlanetScreenState extends State<EditPlanetScreen> {
     );
 
     var tamanho = TextFormField(
-      keyboardType: TextInputType.emailAddress,
       style: style,
       textAlign: TextAlign.center,
+      initialValue: widget.planet?.size,
       decoration: InputDecoration(
           labelText: 'Tamanho',
           labelStyle: style2,
-          hintText: widget.planet.size,
+          hintText: 'Tamanho',
           hintStyle: style,
           fillColor: Colors.white.withOpacity(0.5),
           filled: true,
@@ -56,26 +57,26 @@ class _EditPlanetScreenState extends State<EditPlanetScreen> {
     );
 
     var peso = TextFormField(
-      keyboardType: TextInputType.emailAddress,
       style: style,
       textAlign: TextAlign.center,
+      initialValue: widget.planet?.weight,
       decoration: InputDecoration(
           labelText: 'Peso',
           labelStyle: style2,
           hintStyle: style,
-          hintText: widget.planet.weight,
+          hintText: 'Peso',
           fillColor: Colors.white.withOpacity(0.5),
           filled: true,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
 
     var gravidade = TextFormField(
-      keyboardType: TextInputType.emailAddress,
       style: style,
       textAlign: TextAlign.center,
+      initialValue: widget.planet?.gravity,
       decoration: InputDecoration(
           labelText: 'Gravidade',
-          hintText: widget.planet.gravity,
+          hintText: 'Gravidade',
           labelStyle: style2,
           hintStyle: style,
           fillColor: Colors.white.withOpacity(0.5),
@@ -84,13 +85,13 @@ class _EditPlanetScreenState extends State<EditPlanetScreen> {
     );
 
     var composicao = TextFormField(
-      keyboardType: TextInputType.emailAddress,
       style: style,
       textAlign: TextAlign.center,
+      initialValue: widget.planet?.description,
       decoration: InputDecoration(
           labelText: 'Composição',
           labelStyle: style2,
-          hintText: widget.planet.description,
+          hintText: 'Composição',
           hintStyle: style,
           fillColor: Colors.white.withOpacity(0.5),
           filled: true,

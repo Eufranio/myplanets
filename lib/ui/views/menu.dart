@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:planets/AuthService.dart';
+import 'package:planets/ui/views/info/planet/new_planet.dart';
 
 class MainScreen extends StatefulWidget {
 
@@ -37,7 +38,11 @@ class _MainScreenState extends State<MainScreen> {
         heightFactor: 3.5,
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      onPressed: () {},
+      onPressed: () {
+        Navigator.push(context, MaterialPageRoute(
+          builder: (_) => EditPlanetScreen(planet: null)
+        ));
+      },
     );
 
     var listButton = RaisedButton(

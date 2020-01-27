@@ -5,6 +5,7 @@ import 'package:planets/core/api/crud.dart';
 import 'package:async/async.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:planets/core/viewmodels/model.dart';
+import 'package:planets/ui/views/info/planet/new_planet.dart';
 
 class ListEntitiesSpecificScreen<T extends CRUD> extends StatefulWidget {
 
@@ -23,7 +24,11 @@ class _ListEntitiesSpecificState<T extends CRUD> extends State<ListEntitiesSpeci
     T provider = Provider.of<T>(context);
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(
+              builder: (_) => EditPlanetScreen(planet: null)
+          ));
+        },
         child: Icon(Icons.add),
       ),
       body: Container(
