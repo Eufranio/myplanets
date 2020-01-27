@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:planets/core/viewmodels/planetModel.dart';
-import 'package:planets/core/viewmodels/model.dart';
-
 
 class PlanetInfoScreen extends StatefulWidget {
-
   final Planet planet;
 
   PlanetInfoScreen({this.planet});
@@ -16,6 +13,29 @@ class PlanetInfoScreen extends StatefulWidget {
 class _PlanetInfoState extends State<PlanetInfoScreen> {
   @override
   Widget build(BuildContext context) {
+
+    Widget edit = IconButton(
+      color: Colors.white,
+      icon: Icon(
+        Icons.edit,
+        size: 20,
+      ),
+      onPressed: () {
+        Navigator.push(context, MaterialPageRoute(
+          builder: (_) => widget.planet.getNewPlanet(),
+        ));
+      },
+    );
+
+    Widget info = IconButton(
+      color: Colors.white,
+      icon: Icon(
+        Icons.info,
+        size: 20,
+      ),
+      onPressed: () {}
+    );
+
     return new Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -269,87 +289,3 @@ Widget planet_name(Planet planet) => Container(
     ],
   ),
 );
-
-
-
-Widget info = IconButton(
-  color: Colors.white,
-  icon: Icon(
-    Icons.info,
-    size: 20,
-  ),
-  onPressed: () {
-//    Navigator.push(context, MaterialPageRoute(
-//        builder: (_) => getNewPlanet(),
-//    ));
-  },
-);
-
-Widget edit = IconButton(
-  color: Colors.white,
-  icon: Icon(
-    Icons.edit,
-    size: 20,
-  ),
-  onPressed: () {},
-);
-
-
-//
-//Widget infoButton = Container(
-//  width: 50,
-//  height: 50,
-//  child: Column(
-//    crossAxisAlignment: CrossAxisAlignment.center,
-//    children: <Widget>[
-//      Container(
-//        color: Colors.blue,
-//      ),
-//      Container(
-//        color: Colors.red,
-//      ),
-//    ],
-//  ),
-//);
-
-
-
-//Widget topButtons =
-//Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
-//  backButton,
-//  closeButton,
-//]);
-
-//
-//  Widget closeButton = IconButton(
-//    color: Colors.white,
-//    icon: Icon(
-//      Icons.close,
-//      size: 30,
-//    ),
-//    onPressed: () {},
-//  );
-//
-//  Widget backButton = IconButton(
-//    color: Colors.white,
-//    icon: Icon(
-//      Icons.arrow_back,
-//      size: 30,
-//    ),
-//    onPressed: () {},
-//  );
-//
-//Widget infoPlanetas = Center(
-//  child: Padding(
-//    padding: const EdgeInsets.all(8.0),
-//    child: Container(
-//      width: 60,
-//      height: 60,
-//      color: Colors.white.withOpacity(0.6),
-//      child: Align(
-//        alignment: Alignment.bottomCenter,
-//        child: Text('Tamanho'),
-//      ),
-//    ),
-//  ),
-//);

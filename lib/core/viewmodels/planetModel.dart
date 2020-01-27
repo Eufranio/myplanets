@@ -1,7 +1,7 @@
 import 'model.dart';
 import 'package:flutter/material.dart';
-import 'package:planets/ui/views/info/planet_info.dart';
-import 'package:planets/ui/views/new_planet.dart';
+import 'package:planets/ui/views/info/planet/planet_info.dart';
+import 'package:planets/ui/views/info/planet/new_planet.dart';
 
 class Planet extends Model {
 

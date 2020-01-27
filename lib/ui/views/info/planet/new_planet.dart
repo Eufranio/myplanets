@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:planets/core/viewmodels/planetModel.dart';
 
-
 class EditPlanetScreen extends StatefulWidget {
 
   final Planet planet;
@@ -15,7 +14,6 @@ class EditPlanetScreen extends StatefulWidget {
 class _EditPlanetScreenState extends State<EditPlanetScreen> {
   @override
   Widget build(BuildContext context) {
-
 
     TextStyle style = TextStyle(
         fontSize: 15,
