@@ -1,11 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:planets/core/api/crud.dart';
-import 'package:provider/provider.dart';
-import 'package:planets/core/api/crud.dart';
-import 'package:async/async.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:planets/core/viewmodels/model.dart';
 import 'package:planets/ui/views/info/planet/new_planet.dart';
+import 'package:provider/provider.dart';
+import 'package:planets/ui/widgets/widgets.dart';
+
 
 class ListEntitiesSpecificScreen<T extends CRUD> extends StatefulWidget {
 
@@ -106,7 +106,14 @@ class _ListEntitiesSpecificState<T extends CRUD> extends State<ListEntitiesSpeci
           itemCount: showingItems.length,
           itemBuilder: (buildContext, index) => Padding(
               padding: EdgeInsets.symmetric(vertical: 20),
-              child: buildButton(context, showingItems[index])
+              child: ImageButton(
+                image: AssetImage('assets/button-search-planet.png'),
+                child: Text(showingItems[index].name, style: TextStyle(fontSize: 35)),
+                padding: EdgeInsets.only(right: 30),
+                align: Alignment.centerRight,
+                expandBox: 80,
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => showingItems[index].getInfo()))
+              )
           )
       );
     } else {
@@ -132,39 +139,5 @@ class _ListEntitiesSpecificState<T extends CRUD> extends State<ListEntitiesSpeci
         showingItems.addAll(items);
       });
     }
-  }
-
-  Widget buildButton(context, Model model) {
-    return Material(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      elevation: 5,
-      clipBehavior: Clip.antiAlias,
-      child: MaterialButton(
-        padding: EdgeInsets.zero,
-        textColor: Colors.white,
-        child: Container(
-          constraints: BoxConstraints.expand(height: 80),
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('assets/button-search-planet.png'),
-                fit: BoxFit.cover
-            ),
-          ),
-          child: Padding(
-            padding: EdgeInsets.only(right: 30),
-            child: Align(
-              child: Text(model.name, style: TextStyle(fontSize: 35)),
-              alignment: Alignment.centerRight,
-              heightFactor: 3.5,
-            ),
-          ),
-        ),
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(
-            builder: (_) => model.getInfo()
-          ));
-        },
-      ),
-    );
   }
 }

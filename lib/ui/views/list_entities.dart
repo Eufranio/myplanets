@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:planets/ui/widgets/widgets.dart';
 import 'list_entities_specific.dart';
 import 'package:planets/core/services/planetCrud.dart';
 
@@ -48,34 +49,12 @@ class ListEntitiesScreen extends StatelessWidget {
   }
 
   Widget buildButton(context) {
-    return Material(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      elevation: 5,
-      clipBehavior: Clip.antiAlias,
-      child: MaterialButton(
-        padding: EdgeInsets.zero,
-        textColor: Colors.white,
-        child: Container(
-          constraints: BoxConstraints.expand(),
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('assets/list-button-bg.png'),
-                fit: BoxFit.cover
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Align(
-              child: Text('Planetas'),
-              alignment: Alignment.bottomCenter,
-              heightFactor: 3.5,
-            ),
-          ),
-        ),
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (_) => ListEntitiesSpecificScreen<PlanetCRUD>()));
-        },
-      ),
-    );
+    return ImageButton(
+          image: AssetImage('assets/list-button-bg.png'),
+          child: Text('Planetas'),
+          align: Alignment.bottomCenter,
+          padding: EdgeInsets.all(8),
+          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ListEntitiesSpecificScreen<PlanetCRUD>()))
+      );
   }
 }
