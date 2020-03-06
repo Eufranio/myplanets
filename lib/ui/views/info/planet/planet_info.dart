@@ -42,7 +42,7 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
       ),
       onPressed: () {
         Navigator.push(context, MaterialPageRoute(
-          builder: (_) => widget.planet.getNewPlanet(),
+          builder: (_) => widget.planet.getEdit(),
         ));
       },
     );
@@ -246,7 +246,7 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
                             child: info,
                           ),
                           Text(
-                            widget.planet.description,
+                            widget.planet.composition,
                             style: TextStyle(color: Colors.white, fontSize: 15),
                           ),
                         ],

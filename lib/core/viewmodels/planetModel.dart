@@ -10,9 +10,11 @@ class Planet extends Model {
       size,
       weight,
       gravity,
-      description;
+      composition;
 
-  Planet({this.id, this.name, this.size, this.weight, this.gravity, this.description});
+  List<String> satellites, stars;
+
+  Planet({this.id, this.name, this.size, this.weight, this.gravity, this.composition, this.satellites, this.stars});
 
   Planet.fromMap(String id, Map snapshot) :
         id = id,
@@ -20,7 +22,9 @@ class Planet extends Model {
         size = snapshot['size'],
         weight = snapshot['weight'],
         gravity = snapshot['gravity'],
-        description = snapshot['description'];
+        composition = snapshot['description'],
+        satellites = snapshot['satellites'],
+        stars = snapshot['stars'];
 
   toJson() {
     return {
@@ -28,16 +32,18 @@ class Planet extends Model {
       "size": size,
       "weight": weight,
       "gravity": gravity,
-      "description": description
+      "description": composition,
+      "satellites": satellites,
+      "stars": stars
     };
   }
 
   @override
-  Widget getInfoScreen() {
+  Widget getInfo() {
     return PlanetInfoScreen(planet: this);
   }
 
-  Widget getNewPlanet() {
+  Widget getEdit() {
     return EditPlanetScreen(planet: this);
   }
 

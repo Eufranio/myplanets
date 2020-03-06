@@ -87,7 +87,7 @@ class _EditPlanetScreenState extends State<EditPlanetScreen> {
     var composicao = TextFormField(
       style: style,
       textAlign: TextAlign.center,
-      initialValue: widget.planet?.description,
+      initialValue: widget.planet?.composition,
       decoration: InputDecoration(
           labelText: 'Composição',
           labelStyle: style2,
@@ -186,12 +186,12 @@ class _EditPlanetScreenState extends State<EditPlanetScreen> {
                       width: 320,
                       child: composicao,
                     ),
-
                     Padding(
                       padding: const EdgeInsets.fromLTRB(90, 20, 80, 20),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
+                          widget.planet == null ? SizedBox.shrink() :
                           Center(
                             child: SizedBox(
                               height: 50,

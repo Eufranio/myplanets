@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 abstract class Model {
-  Widget getInfoScreen();
-  Widget getNewPlanet();
+  Widget getInfo();
+  Widget getEdit();
   String name;
 }
