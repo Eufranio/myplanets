@@ -12,7 +12,7 @@ class Planet extends Model {
       gravity,
       composition;
 
-  List<String> satellites, stars;
+  List<String> satellites = [], stars = [];
 
   Planet({this.id, this.name, this.size, this.weight, this.gravity, this.composition, this.satellites, this.stars});
 

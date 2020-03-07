@@ -9,6 +9,10 @@ import 'package:planets/ui/widgets/widgets.dart';
 
 class ListEntitiesSpecificScreen<T extends CRUD> extends StatefulWidget {
 
+  ListEntitiesSpecificScreen(this.editScreen);
+
+  final Widget editScreen;
+
   @override
   _ListEntitiesSpecificState createState() => _ListEntitiesSpecificState<T>();
 }
@@ -26,7 +30,7 @@ class _ListEntitiesSpecificState<T extends CRUD> extends State<ListEntitiesSpeci
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(
-              builder: (_) => EditPlanetScreen(planet: null)
+              builder: (_) => widget.editScreen
           ));
         },
         child: Icon(Icons.add),
@@ -40,15 +44,7 @@ class _ListEntitiesSpecificState<T extends CRUD> extends State<ListEntitiesSpeci
         ),
         child: Column(
           children: <Widget>[
-            AppBar(
-                backgroundColor: Colors.transparent,
-                elevation: 0
-            ),
-            /*Text('Entidades', style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-              color: Colors.white
-            )),*/
+            AppBar(backgroundColor: Colors.transparent, elevation: 0),
             buildSearchBar((s) {
               filterSearchResults(s.toLowerCase());
             }),
@@ -64,7 +60,7 @@ class _ListEntitiesSpecificState<T extends CRUD> extends State<ListEntitiesSpeci
                     showingItems.addAll(items);
                     return buildList();
                   }
-                  return Text('fetching');
+                  return Text('Loading');
                 },
               ),
             )
@@ -104,17 +100,22 @@ class _ListEntitiesSpecificState<T extends CRUD> extends State<ListEntitiesSpeci
       return ListView.builder(
           padding: EdgeInsets.symmetric(horizontal: 50),
           itemCount: showingItems.length,
-          itemBuilder: (buildContext, index) => Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: ImageButton(
-                image: AssetImage('assets/button-search-planet.png'),
-                child: Text(showingItems[index].name, style: TextStyle(fontSize: 35)),
-                padding: EdgeInsets.only(right: 30),
-                align: Alignment.centerRight,
-                expandBox: 80,
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => showingItems[index].getInfo()))
+          itemBuilder: (buildContext, index) =>
+              Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  child: ImageButton(
+                      image: AssetImage('assets/button-search-planet.png'),
+                      child: Text(showingItems[index].name,
+                          style: TextStyle(fontSize: 35)),
+                      padding: EdgeInsets.only(right: 30),
+                      align: Alignment.centerRight,
+                      expandBox: 80,
+                      onPressed: () =>
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (_) => showingItems[index].getInfo()))
+                              .then((val) {setState(() {});})
+                  )
               )
-          )
       );
     } else {
       return Text('Empty');

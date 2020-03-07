@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:planets/core/services/galaxyCrud.dart';
+import 'package:planets/core/services/starCrud.dart';
+import 'package:planets/core/services/systemCrud.dart';
+import 'package:planets/ui/views/info/planet/new_planet.dart';
 import 'package:planets/ui/widgets/widgets.dart';
 import 'list_entities_specific.dart';
 import 'package:planets/core/services/planetCrud.dart';
@@ -44,17 +48,23 @@ class ListEntitiesScreen extends StatelessWidget {
       crossAxisCount: 3,
       mainAxisSpacing: 20,
       crossAxisSpacing: 20,
-      children: List.generate(11, (_) => buildButton(context))
+      children: [
+        buildButton(context, ListEntitiesSpecificScreen<GalaxyCRUD>(EditPlanetScreen(planet: null)), 'Galáxias'),
+        buildButton(context, ListEntitiesSpecificScreen<SystemCRUD>(EditPlanetScreen(planet: null)), 'Sistema Planetário'),
+        buildButton(context, ListEntitiesSpecificScreen<PlanetCRUD>(EditPlanetScreen(planet: null)), 'Planetas'),
+        buildButton(context, ListEntitiesSpecificScreen<StarCRUD>(EditPlanetScreen(planet: null)), 'Estrelas'),
+        buildButton(context, ListEntitiesSpecificScreen<GalaxyCRUD>(EditPlanetScreen(planet: null)), 'Satélites Naturais')
+      ]
     );
   }
 
-  Widget buildButton(context) {
+  Widget buildButton(context, nextScreen, text) {
     return ImageButton(
           image: AssetImage('assets/list-button-bg.png'),
-          child: Text('Planetas'),
+          child: Text(text),
           align: Alignment.bottomCenter,
           padding: EdgeInsets.all(8),
-          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ListEntitiesSpecificScreen<PlanetCRUD>()))
+          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => nextScreen))
       );
   }
 }

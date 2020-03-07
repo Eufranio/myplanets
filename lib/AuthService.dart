@@ -9,11 +9,10 @@ class AuthService with ChangeNotifier {
 
   Future<FirebaseUser> loginUser({String email, String password}) async {
     try {
-      var result = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+      var result = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
       notifyListeners();
       return result.user;
-    }  catch (e) {
+    } catch (e) {
       throw new AuthException(e.code, e.message);
     }
   }

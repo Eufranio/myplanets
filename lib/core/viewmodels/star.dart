@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'model.dart';
 
-class System extends Model {
+class Star extends Model {
 
   String id,
       name,
@@ -15,9 +15,9 @@ class System extends Model {
 
   bool isBlackHole;
 
-  System({this.id, this.name, this.age, this.size, this.distance, this.death, this.type, this.isBlackHole});
+  Star({this.id, this.name, this.age, this.size, this.distance, this.death, this.type, this.isBlackHole});
 
-  System.fromMap(String id, Map snapshot) :
+  Star.fromMap(String id, Map snapshot) :
         id = id,
         name = snapshot['name'],
         age = snapshot['age'],

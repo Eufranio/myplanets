@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:planets/core/viewmodels/planetModel.dart';
 
 class PlanetInfoScreen extends StatefulWidget {
-  final Planet planet;
+  Planet planet;
 
   PlanetInfoScreen({this.planet});
 
@@ -43,7 +43,12 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
       onPressed: () {
         Navigator.push(context, MaterialPageRoute(
           builder: (_) => widget.planet.getEdit(),
-        ));
+        )).then((val) {
+          setState(() {
+            if (val != null)
+              widget.planet = val;
+          });
+        });
       },
     );
 

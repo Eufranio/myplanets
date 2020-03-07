@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:planets/core/services/planetCrud.dart';
 import 'package:planets/core/viewmodels/planetModel.dart';
 import 'package:planets/ui/views/info/planet/planet_info.dart';
+import 'package:provider/provider.dart';
 
 class EditPlanetScreen extends StatefulWidget {
 
-  final Planet planet;
+  Planet planet;
 
   EditPlanetScreen({this.planet});
 
@@ -13,9 +15,21 @@ class EditPlanetScreen extends StatefulWidget {
 }
 
 class _EditPlanetScreenState extends State<EditPlanetScreen> {
+
+  Planet planet;
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    if (widget.planet != null) { // editing an element
+      planet = widget.planet;
+    } else {
+      planet = Planet();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-
     TextStyle style = TextStyle(
         fontSize: 15,
         color: Colors.white,
@@ -29,6 +43,7 @@ class _EditPlanetScreenState extends State<EditPlanetScreen> {
     );
 
     var nome = TextFormField(
+      onSaved: (val) => planet.name = val,
       style: style,
       textAlign: TextAlign.center,
       initialValue: widget.planet?.name,
@@ -43,6 +58,7 @@ class _EditPlanetScreenState extends State<EditPlanetScreen> {
     );
 
     var tamanho = TextFormField(
+      onSaved: (val) => planet.size = val,
       style: style,
       textAlign: TextAlign.center,
       initialValue: widget.planet?.size,
@@ -57,6 +73,7 @@ class _EditPlanetScreenState extends State<EditPlanetScreen> {
     );
 
     var peso = TextFormField(
+      onSaved: (val) => planet.weight = val,
       style: style,
       textAlign: TextAlign.center,
       initialValue: widget.planet?.weight,
@@ -71,6 +88,7 @@ class _EditPlanetScreenState extends State<EditPlanetScreen> {
     );
 
     var gravidade = TextFormField(
+      onSaved: (val) => planet.gravity = val,
       style: style,
       textAlign: TextAlign.center,
       initialValue: widget.planet?.gravity,
@@ -85,6 +103,7 @@ class _EditPlanetScreenState extends State<EditPlanetScreen> {
     );
 
     var composicao = TextFormField(
+      onSaved: (val) => planet.composition = val,
       style: style,
       textAlign: TextAlign.center,
       initialValue: widget.planet?.composition,
@@ -102,18 +121,34 @@ class _EditPlanetScreenState extends State<EditPlanetScreen> {
       color: Colors.deepPurple[900],
       child: Text('Salvar', style: style),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      onPressed: () {},
+      onPressed: () async {
+        _formKey.currentState.save();
+
+        if (widget.planet != null) {
+          await Provider.of<PlanetCRUD>(context, listen: false).update(planet, planet.id);
+        } else {
+          await Provider.of<PlanetCRUD>(context, listen: false).addModel(planet);
+        }
+
+        Navigator.of(context).pop(planet);
+      },
     );
 
     var button_Deletar = RaisedButton(
       color: Colors.deepPurple[600],
       child: IconButton(
-        color: Colors.white, icon: Icon(
-        Icons.delete,color: Colors.white,
-
-      ),),
+        color: Colors.white,
+        icon: Icon(
+        Icons.delete,
+          color: Colors.white,
+        ),
+      ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      onPressed: () {},
+      onPressed: () async {
+        await Provider.of<PlanetCRUD>(context, listen: false).remove(planet.id);
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+      },
     );
 
     return new Scaffold(
@@ -124,9 +159,9 @@ class _EditPlanetScreenState extends State<EditPlanetScreen> {
         ),
         constraints: BoxConstraints.expand(),
         child: SingleChildScrollView(
-
           child: Center(
             child: Form(
+              key: _formKey,
                 child: Column(
                   children: <Widget>[
                     AppBar(

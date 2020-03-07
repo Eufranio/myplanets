@@ -3,6 +3,10 @@ import 'AuthService.dart';
 import 'package:provider/provider.dart';
 import 'package:planets/locator.dart';
 import 'package:planets/core/services/planetCrud.dart';
+import 'package:planets/core/services/galaxyCrud.dart';
+import 'package:planets/core/services/satelliteCrud.dart';
+import 'package:planets/core/services/starCrud.dart';
+import 'package:planets/core/services/systemCrud.dart';
 import 'router.dart';
 
 void main() {
@@ -17,6 +21,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => locator<PlanetCRUD>()),
+        ChangeNotifierProvider(create: (_) => locator<GalaxyCRUD>()),
+        ChangeNotifierProvider(create: (_) => locator<SatelliteCRUD>()),
+        ChangeNotifierProvider(create: (_) => locator<StarCRUD>()),
+        ChangeNotifierProvider(create: (_) => locator<SystemCRUD>()),
         ChangeNotifierProvider(create: (_) => AuthService())
       ],
       child: MaterialApp(
