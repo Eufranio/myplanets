@@ -21,15 +21,15 @@ class System extends Model {
         age = snapshot['age'],
         planetCount = int.parse(snapshot['planetCount']),
         starCount = int.parse(snapshot['starCount']),
-        planets = snapshot['planets'],
-        stars = snapshot['stars'];
+        planets = snapshot['planets'] ?? [],
+        stars = snapshot['stars'] ?? [];
 
   toJson() {
     return {
       "name": name,
       "age": age,
-      "planetCount": planetCount.toString(),
-      "starCount": starCount.toString(),
+      "planetCount": planetCount,
+      "starCount": starCount,
       "planets": planets,
       "stars": stars
     };

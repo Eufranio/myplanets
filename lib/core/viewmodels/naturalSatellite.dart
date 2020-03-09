@@ -20,8 +20,8 @@ class NaturalSatellite extends Model {
         composition = snapshot['composition'],
         size = snapshot['size'],
         weight = snapshot['weight'],
-        planets = snapshot['planets'],
-        stars  = snapshot['stars'];
+        planets = snapshot['planets'] ?? [],
+        stars  = snapshot['stars'] ?? [];
 
   toJson() {
     return {

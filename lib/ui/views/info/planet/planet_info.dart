@@ -11,28 +11,38 @@ class PlanetInfoScreen extends StatefulWidget {
 }
 
 class _PlanetInfoState extends State<PlanetInfoScreen> {
+
+  Widget showOrbitants(context) {
+
+    Widget satellites = ListView(
+      padding: EdgeInsets.all(8),
+      children: widget.planet.satellites.map((e) => Container(
+        height: 60,
+        color: Colors.amber[600],
+        child: Center(child: Text(e)),
+      )).toList()
+    );
+
+    AlertDialog dialog = AlertDialog(
+      title: Text('Orbitantes'),
+      content: Container(
+        height: 300,
+        width: 300,
+        child: satellites
+      ),
+      actions: <Widget>[
+        FlatButton(
+          child: Text('Teste'),
+          onPressed: () {},
+        )
+      ],
+    );
+
+    showDialog(context: context, builder: (_) => dialog);
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    showAlertDialog1(BuildContext context)
-    {
-      // configura o button
-
-      // configura o  AlertDialog
-      AlertDialog alerta = AlertDialog(
-        title: Text("Sistema: Via Láctea"),
-        content: Text("Orbitantes: \n - Lua \n - Satélite"),
-        actions: [
-        ],
-      );
-      // exibe o dialog
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alerta;
-        },
-      );
-    }
 
     Widget edit = IconButton(
       color: Colors.white,
@@ -58,7 +68,8 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
         Icons.info,
         size: 20,
       ),
-      onPressed: () {showAlertDialog1(context);
+      onPressed: () {
+        this.showOrbitants(context);
       }
     );
 
@@ -105,8 +116,8 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
-                                width: 60,
-                                height: 60,
+                                width: 80,
+                                height: 80,
                                 decoration: BoxDecoration(
                                   color: Colors.white.withOpacity(0.8),
                                   borderRadius: BorderRadius.circular(6.0),
@@ -124,7 +135,7 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
                                           style: TextStyle(
                                               color: Colors.deepPurple,
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 12),
+                                              fontSize: 14),
                                         ),
                                       ),
                                     ),
@@ -135,7 +146,7 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             color: Colors.deepPurple,
-                                            fontSize: 10),
+                                            fontSize: 12),
                                       ),
                                     ),
                                   ],
@@ -148,8 +159,8 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
-                                width: 60,
-                                height: 60,
+                                width: 80,
+                                height: 80,
                                 decoration: BoxDecoration(
                                   color: Colors.white.withOpacity(0.8),
                                   borderRadius: BorderRadius.circular(6.0),
@@ -167,7 +178,7 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
                                           style: TextStyle(
                                               color: Colors.deepPurple,
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 12),
+                                              fontSize: 14),
                                         ),
                                       ),
                                     ),
@@ -178,7 +189,7 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             color: Colors.deepPurple,
-                                            fontSize: 10),
+                                            fontSize: 12),
                                       ),
                                     ),
                                   ],
@@ -191,8 +202,8 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
-                                width: 60,
-                                height: 60,
+                                width: 80,
+                                height: 80,
                                 decoration: BoxDecoration(
                                   color: Colors.white.withOpacity(0.8),
                                   borderRadius: BorderRadius.circular(6.0),
@@ -210,7 +221,7 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
                                           style: TextStyle(
                                               color: Colors.deepPurple,
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 12),
+                                              fontSize: 14),
                                         ),
                                       ),
                                     ),
@@ -221,7 +232,7 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             color: Colors.deepPurple,
-                                            fontSize: 10),
+                                            fontSize: 12),
                                       ),
                                     ),
                                   ],

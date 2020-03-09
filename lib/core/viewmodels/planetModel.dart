@@ -25,8 +25,8 @@ class Planet extends Model {
         weight = snapshot['weight'],
         gravity = snapshot['gravity'],
         composition = snapshot['description'],
-        satellites = snapshot['satellites'],
-        stars = snapshot['stars'];
+        satellites = snapshot['satellites'] ?? [],
+        stars = snapshot['stars'] ?? [];
 
   toJson() {
     return {

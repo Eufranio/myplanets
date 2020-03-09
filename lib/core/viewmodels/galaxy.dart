@@ -19,7 +19,7 @@ class Galaxy extends Model {
         name = snapshot['name'],
         distance = snapshot['distance'],
         systemCount = int.parse(snapshot['systemCount'] == 'null' ? '0' : snapshot['systemCount']),
-        systems = snapshot['systems'];
+        systems = snapshot['systems'] ?? [];
 
   toJson() {
     return {

@@ -90,7 +90,7 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              widget.model != null ? SizedBox.shrink() :
+                              //widget.model != null ? SizedBox.shrink() :
                               Center(
                                 child: SizedBox(
                                   height: 50,
@@ -101,12 +101,12 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                     onPressed: () async {
                                       formKey.currentState.save();
+                                      Navigator.of(context).pop(editingModel);
                                       if (widget.model != null) {
                                         await Provider.of<U>(context, listen: false).update(editingModel, editingModel.id);
                                       } else {
                                         await Provider.of<U>(context, listen: false).addModel(editingModel);
                                       }
-                                      Navigator.of(context).pop(editingModel);
                                     }
                                   )
                                 ),

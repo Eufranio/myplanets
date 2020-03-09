@@ -20,11 +20,9 @@ class EditPlanetState extends EditModelScreenState<Planet, PlanetCRUD> {
       decoration: InputDecoration(
           labelText: 'Nome',
           labelStyle: style2,
-          hintText: 'Nome',
-          hintStyle: style,
           fillColor: Colors.white.withOpacity(0.5),
           filled: true,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none)),
     );
 
     var tamanho = TextFormField(
@@ -35,11 +33,9 @@ class EditPlanetState extends EditModelScreenState<Planet, PlanetCRUD> {
       decoration: InputDecoration(
           labelText: 'Tamanho',
           labelStyle: style2,
-          hintText: 'Tamanho',
-          hintStyle: style,
           fillColor: Colors.white.withOpacity(0.5),
           filled: true,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none)),
     );
 
     var peso = TextFormField(
@@ -50,11 +46,9 @@ class EditPlanetState extends EditModelScreenState<Planet, PlanetCRUD> {
       decoration: InputDecoration(
           labelText: 'Peso',
           labelStyle: style2,
-          hintStyle: style,
-          hintText: 'Peso',
           fillColor: Colors.white.withOpacity(0.5),
           filled: true,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none)),
     );
 
     var gravidade = TextFormField(
@@ -64,12 +58,10 @@ class EditPlanetState extends EditModelScreenState<Planet, PlanetCRUD> {
       initialValue: widget.model?.gravity,
       decoration: InputDecoration(
           labelText: 'Gravidade',
-          hintText: 'Gravidade',
           labelStyle: style2,
-          hintStyle: style,
           fillColor: Colors.white.withOpacity(0.5),
           filled: true,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none)),
     );
 
     var composicao = TextFormField(
@@ -80,11 +72,9 @@ class EditPlanetState extends EditModelScreenState<Planet, PlanetCRUD> {
       decoration: InputDecoration(
           labelText: 'Composição',
           labelStyle: style2,
-          hintText: 'Composição',
-          hintStyle: style,
           fillColor: Colors.white.withOpacity(0.5),
           filled: true,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none)),
     );
 
     return [

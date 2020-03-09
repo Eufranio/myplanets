@@ -33,8 +33,8 @@ class Star extends Model {
       "age": age,
       "distance": distance,
       "death": death,
-      "type": type.toString(),
-      isBlackHole: isBlackHole.toString()
+      "type": type,
+      isBlackHole: isBlackHole
     };
   }
 
