@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:planets/core/api/crud.dart';
 import 'package:planets/core/viewmodels/model.dart';
-import 'package:planets/ui/views/info/planet/new_planet.dart';
 import 'package:provider/provider.dart';
 import 'package:planets/ui/widgets/widgets.dart';
 

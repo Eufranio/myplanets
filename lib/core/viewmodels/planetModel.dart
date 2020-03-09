@@ -1,7 +1,9 @@
+import 'package:planets/ui/views/info/edit_model.dart';
+import 'package:planets/ui/views/info/planet/new_planet.dart';
+
 import 'model.dart';
 import 'package:flutter/material.dart';
 import 'package:planets/ui/views/info/planet/planet_info.dart';
-import 'package:planets/ui/views/info/planet/new_planet.dart';
 
 class Planet extends Model {
 
@@ -44,7 +46,7 @@ class Planet extends Model {
   }
 
   Widget getEdit() {
-    return EditPlanetScreen(planet: this);
+    return EditModelScreen(this, () => Planet(), () => EditPlanetState());
   }
 
 }

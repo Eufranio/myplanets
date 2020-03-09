@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:planets/core/services/galaxyCrud.dart';
 import 'package:planets/core/services/starCrud.dart';
 import 'package:planets/core/services/systemCrud.dart';
+import 'package:planets/core/viewmodels/galaxy.dart';
+import 'package:planets/core/viewmodels/planetModel.dart';
+import 'package:planets/ui/views/info/edit_model.dart';
+import 'package:planets/ui/views/info/galaxy/new_galaxy.dart';
 import 'package:planets/ui/views/info/planet/new_planet.dart';
 import 'package:planets/ui/widgets/widgets.dart';
 import 'list_entities_specific.dart';
@@ -49,11 +53,16 @@ class ListEntitiesScreen extends StatelessWidget {
       mainAxisSpacing: 20,
       crossAxisSpacing: 20,
       children: [
-        buildButton(context, ListEntitiesSpecificScreen<GalaxyCRUD>(EditPlanetScreen(planet: null)), 'Galáxias'),
-        buildButton(context, ListEntitiesSpecificScreen<SystemCRUD>(EditPlanetScreen(planet: null)), 'Sistema Planetário'),
-        buildButton(context, ListEntitiesSpecificScreen<PlanetCRUD>(EditPlanetScreen(planet: null)), 'Planetas'),
-        buildButton(context, ListEntitiesSpecificScreen<StarCRUD>(EditPlanetScreen(planet: null)), 'Estrelas'),
-        buildButton(context, ListEntitiesSpecificScreen<GalaxyCRUD>(EditPlanetScreen(planet: null)), 'Satélites Naturais')
+        buildButton(context, ListEntitiesSpecificScreen<PlanetCRUD>(
+            EditModelScreen(null, () => Planet(), () => EditPlanetState())), 'Planetas'),
+        buildButton(context, ListEntitiesSpecificScreen<GalaxyCRUD>(
+            EditModelScreen(null, () => Galaxy(), () => EditGalaxyState())), 'Galáxias'),
+        buildButton(context, ListEntitiesSpecificScreen<SystemCRUD>(
+            EditModelScreen(null, () => Planet(), () => EditPlanetState())), 'Sistema Planetário'),
+        buildButton(context, ListEntitiesSpecificScreen<StarCRUD>(
+            EditModelScreen(null, () => Planet(), () => EditPlanetState())), 'Estrelas'),
+        buildButton(context, ListEntitiesSpecificScreen<GalaxyCRUD>(
+            EditModelScreen(null, () => Planet(), () => EditPlanetState())), 'Satélites Naturais')
       ]
     );
   }

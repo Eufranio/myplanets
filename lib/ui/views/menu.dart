@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:planets/core/viewmodels/planetModel.dart';
+import 'package:planets/ui/views/info/edit_model.dart';
+import 'package:planets/ui/views/info/planet/new_planet.dart';
 import 'package:provider/provider.dart';
 import 'package:planets/AuthService.dart';
-import 'package:planets/ui/views/info/planet/new_planet.dart';
 
 class MainScreen extends StatefulWidget {
 
@@ -55,7 +57,7 @@ class _MainScreenState extends State<MainScreen> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       onPressed: () {
         Navigator.push(context, MaterialPageRoute(
-          builder: (_) => EditPlanetScreen(planet: null)
+          builder: (_) => EditModelScreen(null, () => Planet(), () => EditPlanetState())
         ));
       },
     );
