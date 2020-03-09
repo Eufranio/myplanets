@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:planets/core/api/crud.dart';
 import 'package:planets/core/viewmodels/model.dart';
+import 'package:provider/provider.dart';
 
 class EditModelScreen<T extends Model> extends StatefulWidget {
 
@@ -14,7 +16,7 @@ class EditModelScreen<T extends Model> extends StatefulWidget {
 
 }
 
-abstract class EditModelScreenState<T extends Model> extends State<EditModelScreen<T>> {
+abstract class EditModelScreenState<T extends Model, U extends CRUD> extends State<EditModelScreen<T>> {
 
   T editingModel;
   final formKey = GlobalKey<FormState>();
@@ -43,10 +45,6 @@ abstract class EditModelScreenState<T extends Model> extends State<EditModelScre
   String getTitle();
 
   Iterable<Widget> getFields();
-
-  Future<void> onSave();
-
-  Future<void> onDelete();
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +101,12 @@ abstract class EditModelScreenState<T extends Model> extends State<EditModelScre
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                     onPressed: () async {
                                       formKey.currentState.save();
-                                      await this.onSave();
+                                      if (widget.model != null) {
+                                        await Provider.of<U>(context, listen: false).update(editingModel, editingModel.id);
+                                      } else {
+                                        await Provider.of<U>(context, listen: false).addModel(editingModel);
+                                      }
+                                      Navigator.of(context).pop(editingModel);
                                     }
                                   )
                                 ),
@@ -122,7 +125,9 @@ abstract class EditModelScreenState<T extends Model> extends State<EditModelScre
                                   ),
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                   onPressed: () async {
-                                    await this.onDelete();
+                                    await Provider.of<U>(context, listen: false).remove(editingModel.id);
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pop();
                                   },
                                 )
                               ),

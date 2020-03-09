@@ -2,27 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:planets/core/services/galaxyCrud.dart';
 import 'package:planets/core/viewmodels/galaxy.dart';
 import 'package:planets/ui/views/info/edit_model.dart';
-import 'package:provider/provider.dart';
 
-class EditGalaxyState extends EditModelScreenState<Galaxy> {
+class EditGalaxyState extends EditModelScreenState<Galaxy, GalaxyCRUD> {
 
   @override
   String getTitle() {
     return 'Galáxia';
-  }
-
-  @override
-  Future<void> onSave() async {
-    await Provider.of<GalaxyCRUD>(context, listen: false).remove(editingModel.id);
-    Navigator.of(context).pop();
-    Navigator.of(context).pop();
-  }
-
-  @override
-  Future<void> onDelete() async {
-    await Provider.of<GalaxyCRUD>(context, listen: false).remove(editingModel.id);
-    Navigator.of(context).pop();
-    Navigator.of(context).pop();
   }
 
   @override

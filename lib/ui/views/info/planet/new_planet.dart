@@ -3,29 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:planets/core/services/planetCrud.dart';
 import 'package:planets/core/viewmodels/planetModel.dart';
 import 'package:planets/ui/views/info/edit_model.dart';
-import 'package:provider/provider.dart';
 
-class EditPlanetState extends EditModelScreenState<Planet> {
+class EditPlanetState extends EditModelScreenState<Planet, PlanetCRUD> {
   @override
   String getTitle() {
     return 'Planeta';
-  }
-
-  @override
-  Future<void> onSave() async {
-    if (widget.model != null) {
-      await Provider.of<PlanetCRUD>(context, listen: false).update(editingModel, editingModel.id);
-    } else {
-      await Provider.of<PlanetCRUD>(context, listen: false).addModel(editingModel);
-    }
-    Navigator.of(context).pop(editingModel);
-  }
-
-  @override
-  Future<void> onDelete() async {
-    await Provider.of<PlanetCRUD>(context, listen: false).remove(editingModel.id);
-    Navigator.of(context).pop();
-    Navigator.of(context).pop();
   }
 
   @override
