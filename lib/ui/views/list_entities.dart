@@ -6,8 +6,10 @@ import 'package:planets/core/viewmodels/galaxy.dart';
 import 'package:planets/core/viewmodels/planetModel.dart';
 import 'package:planets/ui/views/info/edit_model.dart';
 import 'package:planets/ui/views/info/galaxy/new_galaxy.dart';
+import 'package:planets/ui/views/info/system/new_system.dart';
 import 'package:planets/ui/views/info/planet/new_planet.dart';
 import 'package:planets/ui/widgets/widgets.dart';
+import '../../core/viewmodels/system.dart';
 import 'list_entities_specific.dart';
 import 'package:planets/core/services/planetCrud.dart';
 
@@ -58,7 +60,7 @@ class ListEntitiesScreen extends StatelessWidget {
         buildButton(context, ListEntitiesSpecificScreen<GalaxyCRUD>(
             EditModelScreen(null, () => Galaxy(), () => EditGalaxyState())), 'Galáxias'),
         buildButton(context, ListEntitiesSpecificScreen<SystemCRUD>(
-            EditModelScreen(null, () => Planet(), () => EditPlanetState())), 'Sistema Planetário'),
+            EditModelScreen(null, () => System(), () => EditSystemState())), 'Sistema Planetário'),
         buildButton(context, ListEntitiesSpecificScreen<StarCRUD>(
             EditModelScreen(null, () => Planet(), () => EditPlanetState())), 'Estrelas'),
         buildButton(context, ListEntitiesSpecificScreen<GalaxyCRUD>(

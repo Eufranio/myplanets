@@ -84,6 +84,7 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
             AppBar(
                 backgroundColor: Colors.transparent,
                 elevation: 0
+
             ),
             Container(
               width: 360,
@@ -105,17 +106,17 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
 
             Container(
               width: 330,
-              height: 120,
+              height: 80,
               child: Align(
                   alignment: Alignment.bottomCenter,
+                  //lista das caracteristicas
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
+                      //tamanho
                       SizedBox(
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
                             child: Container(
+                              padding: EdgeInsets.all(4.0),
                                 width: 80,
                                 height: 80,
                                 decoration: BoxDecoration(
@@ -130,7 +131,8 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
                                       child: Align(
                                         alignment: Alignment.topCenter,
                                         child: Text(
-                                          widget.planet.size,
+                                          //widget.planet.size
+                                          "12312312122",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: Colors.deepPurple,
@@ -152,13 +154,11 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
                                   ],
                                 )),
                           ),
-                        ),
-                      ),
+
+
                       SizedBox(
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
                             child: Container(
+                                padding: EdgeInsets.all(4.0),
                                 width: 80,
                                 height: 80,
                                 decoration: BoxDecoration(
@@ -195,13 +195,10 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
                                   ],
                                 )),
                           ),
-                        ),
-                      ),
+
                       SizedBox(
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
                             child: Container(
+                                padding: EdgeInsets.all(4.0),
                                 width: 80,
                                 height: 80,
                                 decoration: BoxDecoration(
@@ -238,10 +235,13 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
                                   ],
                                 )),
                           ),
-                        ),
-                      ),
                     ],
                   )),
+            ),
+
+            SizedBox(
+              height: 30,
+              width: 30,
             ),
             Container(
                 width: 330,
