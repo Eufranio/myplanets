@@ -112,7 +112,14 @@ class _ListEntitiesSpecificState<T extends CRUD> extends State<ListEntitiesSpeci
                       onPressed: () =>
                           Navigator.push(context, MaterialPageRoute(
                               builder: (_) => showingItems[index].getInfo()))
-                              .then((val) {setState(() {});})
+                              .then((val) {setState(() {});}),
+                      popupButton: PopupMenuButton(
+                        itemBuilder: (_) => [
+                          PopupMenuItem(value: 1, child: Text('Teste')),
+                          PopupMenuItem(value: 1, child: Text('Teste2')),
+                          PopupMenuItem(value: 1, child: Text('Teste3'))
+                        ]
+                    ),
                   )
               )
       );

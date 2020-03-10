@@ -94,7 +94,7 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
                               Center(
                                 child: SizedBox(
                                   height: 50,
-                                  width: 80,
+                                  width: 100,
                                   child: RaisedButton(
                                     color: Colors.deepPurple[900],
                                     child: Text('Salvar', style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.normal)),

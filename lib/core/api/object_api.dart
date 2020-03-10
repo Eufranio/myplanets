@@ -1,6 +1,7 @@
 import 'package:planets/core/api/database_api.dart';
 import 'package:planets/core/viewmodels/galaxy.dart';
 import 'package:planets/core/viewmodels/naturalSatellite.dart';
+import 'package:planets/core/viewmodels/orbit.dart';
 import 'package:planets/core/viewmodels/planetModel.dart';
 import 'package:planets/core/viewmodels/system.dart';
 import 'package:planets/core/viewmodels/star.dart';
@@ -69,4 +70,15 @@ class Satellites extends ObjectManager<NaturalSatellite> {
 
   @override
   Map toJson(NaturalSatellite obj) => obj.toJson();
+}
+
+// orbits
+class Orbits extends ObjectManager<Orbit> {
+  Orbits() : super('satellites');
+
+  @override
+  Orbit build(String id, Map map) => Orbit.fromMap(id, map);
+
+  @override
+  Map toJson(Orbit obj) => obj.toJson();
 }
