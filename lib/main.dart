@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:planets/core/services/orbitCrud.dart';
 import 'AuthService.dart';
 import 'package:provider/provider.dart';
 import 'package:planets/locator.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => locator<SatelliteCRUD>()),
         ChangeNotifierProvider(create: (_) => locator<StarCRUD>()),
         ChangeNotifierProvider(create: (_) => locator<SystemCRUD>()),
+        ChangeNotifierProvider(create: (_) => locator<OrbitCRUD>()),
         ChangeNotifierProvider(create: (_) => AuthService())
       ],
       child: MaterialApp(

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:planets/core/services/galaxyCrud.dart';
+import 'package:planets/core/services/orbitCrud.dart';
 import 'package:planets/core/services/satelliteCrud.dart';
 import 'package:planets/core/services/starCrud.dart';
 import 'package:planets/core/services/systemCrud.dart';
 import 'package:planets/core/viewmodels/galaxy.dart';
 import 'package:planets/core/viewmodels/naturalSatellite.dart';
+import 'package:planets/core/viewmodels/orbit.dart';
 import 'package:planets/core/viewmodels/planetModel.dart';
 import 'package:planets/ui/views/info/edit_model.dart';
 import 'package:planets/ui/views/info/galaxy/new_galaxy.dart';
+import 'package:planets/ui/views/info/orbit/new_orbit.dart';
 import 'package:planets/ui/views/info/satellite/new_satellite.dart';
 import 'package:planets/ui/views/info/system/new_system.dart';
 import 'package:planets/ui/views/info/planet/new_planet.dart';
@@ -80,7 +83,12 @@ class ListEntitiesScreen extends StatelessWidget {
           buildButton(context, ListEntitiesSpecificScreen<SatelliteCRUD>(
               editScreen: EditModelScreen(
                   null, () => NaturalSatellite(), () => EditSatelliteState())),
-              'Satélites Naturais')
+              'Satélites Naturais'),
+          buildButton(context, ListEntitiesSpecificScreen<OrbitCRUD>(
+            editScreen: EditModelScreen(
+                null, () => Orbit(), () => EditOrbitState()
+            ),
+          ), 'Órbitas')
         ]
     );
   }

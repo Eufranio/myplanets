@@ -5,4 +5,6 @@ abstract class Model {
   Widget getEdit();
   String name;
   String id;
+
+  bool operator == (m) => m is Model && id == m.id;
 }

@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:planets/core/api/object_api.dart';
 import 'package:planets/core/services/galaxyCrud.dart';
+import 'package:planets/core/services/orbitCrud.dart';
 import 'package:planets/core/services/planetCrud.dart';
 import 'package:planets/core/services/satelliteCrud.dart';
 import 'package:planets/core/services/starCrud.dart';
@@ -23,4 +24,7 @@ void setupLocator() {
 
   locator.registerLazySingleton(() => Systems());
   locator.registerLazySingleton(() => SystemCRUD());
+
+  locator.registerLazySingleton(() => Orbits());
+  locator.registerLazySingleton(() => OrbitCRUD());
 }
