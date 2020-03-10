@@ -86,7 +86,6 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
             AppBar(
                 backgroundColor: Colors.transparent,
                 elevation: 0
-
             ),
             Container(
               width: 360,
@@ -98,7 +97,6 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
                   height: 25,
                   color: Colors.transparent,
                   child: edit,
-
                 ),
               ),
             ),

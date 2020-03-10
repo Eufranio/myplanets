@@ -8,9 +8,15 @@ import 'package:planets/ui/widgets/image_button.dart';
 
 class ListEntitiesSpecificScreen<T extends CRUD> extends StatefulWidget {
 
-  ListEntitiesSpecificScreen(this.editScreen);
+  ListEntitiesSpecificScreen({
+    @required this.editScreen,
+    this.childInfoFunction,
+    this.buttonSize = 80
+  });
 
+  final double buttonSize;
   final Widget editScreen;
+  final Function childInfoFunction;
 
   @override
   _ListEntitiesSpecificState createState() => _ListEntitiesSpecificState<T>();
@@ -104,11 +110,11 @@ class _ListEntitiesSpecificState<T extends CRUD> extends State<ListEntitiesSpeci
                   padding: EdgeInsets.symmetric(vertical: 20),
                   child: ImageButton(
                       image: AssetImage('assets/button-search-planet.png'),
-                      child: Text(showingItems[index].name,
-                          style: TextStyle(fontSize: 35)),
+                      child: widget.childInfoFunction?.call(showingItems[index]) ??
+                          Text(showingItems[index].name, style: TextStyle(fontSize: 35)),
                       padding: EdgeInsets.only(right: 30),
                       align: Alignment.centerRight,
-                      expandBox: 80,
+                      expandBox: widget.buttonSize,
                       onPressed: () =>
                           Navigator.push(context, MaterialPageRoute(
                               builder: (_) => showingItems[index].getInfo()))

@@ -53,22 +53,35 @@ class ListEntitiesScreen extends StatelessWidget {
 
   Widget buildList(context) {
     return GridView.count(
-      padding: EdgeInsets.all(15),
-      crossAxisCount: 3,
-      mainAxisSpacing: 20,
-      crossAxisSpacing: 20,
-      children: [
-        buildButton(context, ListEntitiesSpecificScreen<PlanetCRUD>(
-            EditModelScreen(null, () => Planet(), () => EditPlanetState())), 'Planetas'),
-        buildButton(context, ListEntitiesSpecificScreen<GalaxyCRUD>(
-            EditModelScreen(null, () => Galaxy(), () => EditGalaxyState())), 'Galáxias'),
-        buildButton(context, ListEntitiesSpecificScreen<SystemCRUD>(
-            EditModelScreen(null, () => System(), () => EditSystemState())), 'Sistema Planetário'),
-        buildButton(context, ListEntitiesSpecificScreen<StarCRUD>(
-            EditModelScreen(null, () => Planet(), () => EditPlanetState())), 'Estrelas'),
-        buildButton(context, ListEntitiesSpecificScreen<SatelliteCRUD>(
-            EditModelScreen(null, () => NaturalSatellite(), () => EditSatelliteState())), 'Satélites Naturais')
-      ]
+        padding: EdgeInsets.all(15),
+        crossAxisCount: 3,
+        mainAxisSpacing: 20,
+        crossAxisSpacing: 20,
+        children: [
+          buildButton(context,
+              ListEntitiesSpecificScreen<PlanetCRUD>(
+                  editScreen: EditModelScreen(
+                      null, () => Planet(), () => EditPlanetState())),
+              'Planetas'),
+          buildButton(context,
+              ListEntitiesSpecificScreen<GalaxyCRUD>(
+                  editScreen: EditModelScreen(
+                      null, () => Galaxy(), () => EditGalaxyState()),
+                  childInfoFunction: EditGalaxyState.shortInfo,
+                  buttonSize: 130),
+              'Galáxias'),
+          buildButton(context, ListEntitiesSpecificScreen<SystemCRUD>(
+              editScreen: EditModelScreen(
+                  null, () => System(), () => EditSystemState())),
+              'Sistema Planetário'),
+          buildButton(context, ListEntitiesSpecificScreen<StarCRUD>(
+              editScreen: EditModelScreen(
+                  null, () => Planet(), () => EditPlanetState())), 'Estrelas'),
+          buildButton(context, ListEntitiesSpecificScreen<SatelliteCRUD>(
+              editScreen: EditModelScreen(
+                  null, () => NaturalSatellite(), () => EditSatelliteState())),
+              'Satélites Naturais')
+        ]
     );
   }
 
