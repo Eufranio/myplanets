@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:planets/core/viewmodels/planetModel.dart';
+import 'package:planets/ui/widgets/image_button.dart';
+import 'package:planets/ui/widgets/info_box.dart';
 
 class PlanetInfoScreen extends StatefulWidget {
   Planet planet;
@@ -113,128 +115,39 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      //tamanho
-                      SizedBox(
-                            child: Container(
-                              padding: EdgeInsets.all(4.0),
-                                width: 80,
-                                height: 80,
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.8),
-                                  borderRadius: BorderRadius.circular(6.0),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    Center(
-                                      child: Align(
-                                        alignment: Alignment.topCenter,
-                                        child: Text(
-                                          //widget.planet.size
-                                          "12312312122",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              color: Colors.deepPurple,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14),
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Text(
-                                        'Tamanho',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Colors.deepPurple,
-                                            fontSize: 12),
-                                      ),
-                                    ),
-                                  ],
-                                )),
-                          ),
-
-
-                      SizedBox(
-                            child: Container(
-                                padding: EdgeInsets.all(4.0),
-                                width: 80,
-                                height: 80,
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.8),
-                                  borderRadius: BorderRadius.circular(6.0),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    Center(
-                                      child: Align(
-                                        alignment: Alignment.topCenter,
-                                        child: Text(
-                                          widget.planet.weight,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              color: Colors.deepPurple,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14),
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Text(
-                                        'Peso',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Colors.deepPurple,
-                                            fontSize: 12),
-                                      ),
-                                    ),
-                                  ],
-                                )),
-                          ),
-
-                      SizedBox(
-                            child: Container(
-                                padding: EdgeInsets.all(4.0),
-                                width: 80,
-                                height: 80,
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.8),
-                                  borderRadius: BorderRadius.circular(6.0),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    Center(
-                                      child: Align(
-                                        alignment: Alignment.topCenter,
-                                        child: Text(
-                                          widget.planet.gravity,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              color: Colors.deepPurple,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14),
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Text(
-                                        'Gravidade',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Colors.deepPurple,
-                                            fontSize: 12),
-                                      ),
-                                    ),
-                                  ],
-                                )),
-                          ),
+                      InfoBox(
+                        value: Text('12312312122', textAlign: TextAlign.center, style: TextStyle(
+                              color: Colors.deepPurple,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14)
+                        ),
+                        title: Text('Tamanho', textAlign: TextAlign.center, style: TextStyle(
+                              color: Colors.deepPurple,
+                              fontSize: 12),
+                        ),
+                      ),
+                      InfoBox(
+                        value: Text(widget.planet.weight, textAlign: TextAlign.center, style: TextStyle(
+                              color: Colors.deepPurple,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14),
+                        ),
+                        title: Text('Peso', textAlign: TextAlign.center, style: TextStyle(
+                              color: Colors.deepPurple,
+                              fontSize: 12),
+                        ),
+                      ),
+                      InfoBox(
+                        value: Text(widget.planet.gravity, textAlign: TextAlign.center, style: TextStyle(
+                              color: Colors.deepPurple,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14),
+                        ),
+                        title: Text('Gravidade', textAlign: TextAlign.center, style: TextStyle(
+                              color: Colors.deepPurple,
+                              fontSize: 12),
+                        ),
+                      ),
                     ],
                   )),
             ),
