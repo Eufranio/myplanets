@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:planets/core/api/crud.dart';
 import 'package:planets/core/viewmodels/model.dart';
 import 'package:provider/provider.dart';
-import 'package:planets/ui/widgets/widgets.dart';
+import 'package:planets/ui/widgets/image_button.dart';
 
 
 class ListEntitiesSpecificScreen<T extends CRUD> extends StatefulWidget {

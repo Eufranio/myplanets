@@ -11,7 +11,7 @@ import 'package:planets/ui/views/info/galaxy/new_galaxy.dart';
 import 'package:planets/ui/views/info/satellite/new_satellite.dart';
 import 'package:planets/ui/views/info/system/new_system.dart';
 import 'package:planets/ui/views/info/planet/new_planet.dart';
-import 'package:planets/ui/widgets/widgets.dart';
+import 'package:planets/ui/widgets/image_button.dart';
 import '../../core/viewmodels/system.dart';
 import 'list_entities_specific.dart';
 import 'package:planets/core/services/planetCrud.dart';
