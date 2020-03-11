@@ -42,7 +42,9 @@ class EditOrbitState extends EditModelScreenState<Orbit, OrbitCRUD> {
           ],
         )
       );
+      return false;
     }
+    return true;
   }
 
   @override

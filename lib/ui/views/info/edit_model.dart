@@ -102,9 +102,8 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
                                     child: Text('Salvar', style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.normal)),
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                     onPressed: () async {
-                                      var canSave = this.save(context);
-                                      if (canSave != null && !this.save(context)) return;
                                       formKey.currentState.save();
+                                      if (!this.save(context)) return;
                                       Navigator.of(context).pop(editingModel);
                                       if (widget.model != null) {
                                         await Provider.of<U>(context, listen: false).update(editingModel, editingModel.id);
