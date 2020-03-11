@@ -60,11 +60,10 @@ class EditGalaxyState extends EditModelScreenState<Galaxy, GalaxyCRUD> {
       decoration: InputDecoration(
           labelText: 'Nome',
           labelStyle: style2,
-          hintText: 'Nome',
-          hintStyle: style,
+
           fillColor: Colors.white.withOpacity(0.5),
           filled: true,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none)),
     );
 
     var distancia = TextFormField(
@@ -75,16 +74,18 @@ class EditGalaxyState extends EditModelScreenState<Galaxy, GalaxyCRUD> {
       decoration: InputDecoration(
           labelText: 'Distância da Terra',
           labelStyle: style2,
-          hintText: 'Distância da Terra',
-          hintStyle: style,
+
           fillColor: Colors.white.withOpacity(0.5),
           filled: true,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none)),
     );
 
     return [
       SizedBox(height: 50, width: 320,
         child: nome,
+      ),
+      SizedBox(height: 20, width: 1,
+
       ),
       SizedBox(height: 50, width: 320,
         child: distancia,

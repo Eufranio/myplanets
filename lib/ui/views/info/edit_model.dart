@@ -42,9 +42,19 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
     }
   }
 
+
+  bool estado(int x){
+
+
+    return true;
+  }
+
+
+
   String getTitle();
 
   Iterable<Widget> getFields();
+
 
   @override
   Widget build(BuildContext context) {
@@ -111,6 +121,9 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
                                   )
                                 ),
                               ),
+                              Visibility(
+                                visible: estado(1),
+                              child:
                               SizedBox(
                                 height: 50,
                                 width: 100,
@@ -130,6 +143,7 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
                                     Navigator.of(context).pop();
                                   },
                                 )
+                              ),
                               ),
                             ],
                           ),
