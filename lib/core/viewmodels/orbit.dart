@@ -1,4 +1,6 @@
 import 'package:planets/core/viewmodels/model.dart';
+import 'package:planets/ui/views/info/edit_model.dart';
+import 'package:planets/ui/views/info/orbit/new_orbit.dart';
 
 class Orbit extends Model {
 
@@ -27,6 +29,6 @@ class Orbit extends Model {
 
   getInfo() => null;
 
-  getEdit() => null;
+  getEdit() => EditModelScreen(this, () => Orbit(), () => EditOrbitState());
 
 }

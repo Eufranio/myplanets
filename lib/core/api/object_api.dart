@@ -74,7 +74,7 @@ class Satellites extends ObjectManager<NaturalSatellite> {
 
 // orbits
 class Orbits extends ObjectManager<Orbit> {
-  Orbits() : super('satellites');
+  Orbits() : super('orbits');
 
   @override
   Orbit build(String id, Map map) => Orbit.fromMap(id, map);

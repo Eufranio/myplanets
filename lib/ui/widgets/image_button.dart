@@ -73,13 +73,10 @@ class ImageButton extends StatelessWidget {
               color: this.popupButton.color ?? popupMenuTheme.color,
               captureInheritedThemes: this.popupButton.captureInheritedThemes,
             ).then<void>((newValue) {
-              /*if (newValue == null) {
-                if (this.popupButton.onCanceled != null)
-                  this.popupButton.onCanceled();
+              if (newValue == null) {
                 return null;
-              }
-              if (widget.onSelected != null)
-                widget.onSelected(newValue);*/
+              } else if (this.popupButton.onSelected != null)
+                this.popupButton.onSelected(newValue);
             });
           }
         },

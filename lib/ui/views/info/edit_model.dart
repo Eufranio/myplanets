@@ -46,6 +46,8 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
 
   Iterable<Widget> getFields();
 
+  bool save(context) => true;
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -100,6 +102,8 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
                                     child: Text('Salvar', style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.normal)),
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                     onPressed: () async {
+                                      var canSave = this.save(context);
+                                      if (canSave != null && !this.save(context)) return;
                                       formKey.currentState.save();
                                       Navigator.of(context).pop(editingModel);
                                       if (widget.model != null) {
