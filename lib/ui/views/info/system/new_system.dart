@@ -24,11 +24,9 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD>{
       decoration: InputDecoration(
           labelText: 'Nome',
           labelStyle: style2,
-          hintText: 'Nome',
-          hintStyle: style,
           fillColor: Colors.white.withOpacity(0.5),
           filled: true,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none)),
     );
 
     var idade = TextFormField(
@@ -39,11 +37,9 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD>{
       decoration: InputDecoration(
           labelText: 'Idade',
           labelStyle: style2,
-          hintText: 'Idade',
-          hintStyle: style,
           fillColor: Colors.white.withOpacity(0.5),
           filled: true,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none)),
     );
 
 
@@ -51,7 +47,8 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD>{
       SizedBox(height: 50, width: 320,
         child: nome,
       ),
-
+      SizedBox(height: 20, width: 1,
+      ),
       SizedBox(height: 50, width: 320,
        child: idade,
       ),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:planets/core/services/satelliteCrud.dart';
 import 'package:planets/core/viewmodels/naturalSatellite.dart';
 import 'package:planets/ui/views/info/edit_model.dart';
+import 'package:flutter/services.dart';
+
 
 class EditSatelliteState extends EditModelScreenState<NaturalSatellite, SatelliteCRUD> {
 
@@ -21,6 +23,8 @@ class EditSatelliteState extends EditModelScreenState<NaturalSatellite, Satellit
     );
 
     var tamanho = TextFormField(
+      inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+      keyboardType: TextInputType.number,
       onSaved: (val) => editingModel.size = val,
       style: style,
       textAlign: TextAlign.center,
@@ -34,6 +38,8 @@ class EditSatelliteState extends EditModelScreenState<NaturalSatellite, Satellit
     );
 
     var peso = TextFormField(
+      inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+      keyboardType: TextInputType.number,
       onSaved: (val) => editingModel.weight = val,
       style: style,
       textAlign: TextAlign.center,

@@ -9,13 +9,14 @@ class Star extends Model {
       age,
       size,
       distance,
-      death;
+      death,
+      gravity;
 
   int type;
 
   bool isBlackHole;
 
-  Star({this.id, this.name, this.age, this.size, this.distance, this.death, this.type, this.isBlackHole});
+  Star({this.id, this.name, this.age, this.size, this.distance, this.death, this.gravity, this.type, this.isBlackHole});
 
   Star.fromMap(String id, Map snapshot) :
         id = id,
@@ -24,8 +25,10 @@ class Star extends Model {
         size = snapshot['size'],
         distance = snapshot['distance'],
         death = snapshot['death'],
+        gravity = snapshot['gravity'],
         type = int.parse(snapshot['type']),
         isBlackHole = bool.fromEnvironment(snapshot['isBlackHole']);
+
 
   toJson() {
     return {
@@ -33,7 +36,9 @@ class Star extends Model {
       "age": age,
       "distance": distance,
       "death": death,
+      "gravity": gravity,
       "type": type,
+
       isBlackHole: isBlackHole
     };
   }

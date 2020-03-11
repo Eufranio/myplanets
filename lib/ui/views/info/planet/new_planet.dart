@@ -84,7 +84,7 @@ class EditPlanetState extends EditModelScreenState<Planet, PlanetCRUD> {
         child: nome,
       ),
       Padding(
-        padding: const EdgeInsets.fromLTRB(35, 20, 35, 20),
+        padding: const EdgeInsets.fromLTRB(50, 20, 50, 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
