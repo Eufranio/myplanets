@@ -90,7 +90,7 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
                         Padding(
                           padding: const EdgeInsets.fromLTRB(90, 20, 80, 20),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: widget.model == null ? MainAxisAlignment.center : MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               //widget.model != null ? SizedBox.shrink() :
                               Center(
@@ -115,6 +115,7 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
                                   )
                                 ),
                               ),
+                              widget.model == null ? SizedBox.shrink() :
                               SizedBox(
                                 height: 50,
                                 width: 100,

@@ -84,9 +84,7 @@ class EditGalaxyState extends EditModelScreenState<Galaxy, GalaxyCRUD> {
       SizedBox(height: 50, width: 320,
         child: nome,
       ),
-      SizedBox(height: 20, width: 1,
-
-      ),
+      SizedBox(height: 20, width: 1),
       SizedBox(height: 50, width: 320,
         child: distancia,
       ),
