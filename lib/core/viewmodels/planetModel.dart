@@ -1,4 +1,5 @@
 import 'package:planets/ui/views/info/edit_model.dart';
+import 'package:planets/ui/views/info/info_model.dart';
 import 'package:planets/ui/views/info/planet/new_planet.dart';
 
 import 'model.dart';
@@ -42,7 +43,7 @@ class Planet extends Model {
 
   @override
   Widget getInfo() {
-    return PlanetInfoScreen(planet: this);
+    return InfoModelScreen(this, () => PlanetInfoState());
   }
 
   Widget getEdit() {

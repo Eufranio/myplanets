@@ -14,27 +14,21 @@ class NaturalSatellite extends Model {
       size,
       weight;
 
-  List<String> planets, stars;
-
-  NaturalSatellite({this.id, this.name, this.composition, this.size, this.weight, this.planets, this.stars});
+  NaturalSatellite({this.id, this.name, this.composition, this.size, this.weight});
 
   NaturalSatellite.fromMap(String id, Map snapshot) :
         id = id,
         name = snapshot['name'],
         composition = snapshot['composition'],
         size = snapshot['size'],
-        weight = snapshot['weight'],
-        planets = snapshot['planets'] ?? [],
-        stars  = snapshot['stars'] ?? [];
+        weight = snapshot['weight'];
 
   toJson() {
     return {
       "name": name,
       "composition": composition,
       "size": size,
-      "weight": weight,
-      "planets": planets,
-      "stars": stars
+      "weight": weight
     };
   }
 

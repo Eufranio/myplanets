@@ -11,7 +11,7 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD>{
 
   @override
   String getTitle() {
-    return 'Sistemas Panetários';
+    return 'Sistema Panetário';
   }
 
   @override

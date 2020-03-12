@@ -64,7 +64,7 @@ class _ListModelsScreenState<T extends CRUD, U> extends State<ListModelsScreen<T
               padding: EdgeInsets.all(10),
                 child: ImageButton(
                     image: AssetImage('assets/list-button-bg.png'),
-                    child: e.getDisplayButton(context) ?? Text(e.id),
+                    child: e.getDisplayButton(context) ?? Text(e.name),
                     align: Alignment.center,
                     padding: EdgeInsets.all(8),
                     onPressed: () =>

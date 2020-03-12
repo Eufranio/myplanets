@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:planets/ui/views/info/edit_model.dart';
+import 'package:planets/ui/views/info/galaxy/galaxy_info.dart';
 import 'package:planets/ui/views/info/galaxy/new_galaxy.dart';
+import 'package:planets/ui/views/info/info_model.dart';
 
 import 'model.dart';
 
@@ -10,29 +12,27 @@ class Galaxy extends Model {
       name,
       distance;
 
-  int systemCount;
-
   List<String> systems;
 
-  Galaxy({this.id, this.name, this.distance, this.systemCount, this.systems});
+  int get systemCount => this.systems.length;
+
+  Galaxy({this.id, this.name, this.distance, this.systems});
 
   Galaxy.fromMap(String id, Map snapshot) :
         id = id,
         name = snapshot['name'],
         distance = snapshot['distance'],
-        systemCount = int.parse(snapshot['systemCount'] == 'null' ? '0' : snapshot['systemCount']),
-        systems = snapshot['systems'] ?? [];
+        systems = List.from(snapshot['systems'] ?? []);
 
   toJson() {
     return {
       "name": name,
       "distance": distance,
-      "systemCount": systemCount.toString(),
       "systems": systems
     };
   }
 
-  Widget getInfo() => null;
+  Widget getInfo() => InfoModelScreen(this, () => GalaxyInfoState());
 
   Widget getEdit() => EditModelScreen(this, () => Galaxy(), () => EditGalaxyState());
 

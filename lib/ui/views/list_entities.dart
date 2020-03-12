@@ -58,16 +58,11 @@ class ListEntitiesScreen extends StatelessWidget {
 
   Widget buildList(context) {
     return GridView.count(
-        padding: EdgeInsets.all(15),
-        crossAxisCount: 3,
-        mainAxisSpacing: 20,
-        crossAxisSpacing: 20,
+        padding: EdgeInsets.all(30),
+        crossAxisCount: 2,
+        mainAxisSpacing: 40,
+        crossAxisSpacing: 40,
         children: [
-          buildButton(context,
-              ListEntitiesSpecificScreen<PlanetCRUD>(
-                  editScreen: EditModelScreen(
-                      null, () => Planet(), () => EditPlanetState())),
-              'Planetas'),
           buildButton(context,
               ListEntitiesSpecificScreen<GalaxyCRUD>(
                   editScreen: EditModelScreen(
@@ -78,14 +73,19 @@ class ListEntitiesScreen extends StatelessWidget {
           buildButton(context, ListEntitiesSpecificScreen<SystemCRUD>(
               editScreen: EditModelScreen(
                   null, () => System(), () => EditSystemState())),
-              'Sistema Planetário'),
-          buildButton(context, ListEntitiesSpecificScreen<StarCRUD>(
-              editScreen: EditModelScreen(
-                  null, () => Star(), () => EditStarState())), 'Estrelas'),
+              'Sistemas Planetários'),
+          buildButton(context,
+              ListEntitiesSpecificScreen<PlanetCRUD>(
+                  editScreen: EditModelScreen(
+                      null, () => Planet(), () => EditPlanetState())),
+              'Planetas'),
           buildButton(context, ListEntitiesSpecificScreen<SatelliteCRUD>(
               editScreen: EditModelScreen(
                   null, () => NaturalSatellite(), () => EditSatelliteState())),
               'Satélites Naturais'),
+          buildButton(context, ListEntitiesSpecificScreen<StarCRUD>(
+              editScreen: EditModelScreen(
+                  null, () => Star(), () => EditStarState())), 'Estrelas'),
           buildButton(context, ListEntitiesSpecificScreen<OrbitCRUD>(
             editScreen: EditModelScreen(
                 null, () => Orbit(), () => EditOrbitState()
@@ -98,9 +98,9 @@ class ListEntitiesScreen extends StatelessWidget {
   Widget buildButton(context, nextScreen, text) {
     return ImageButton(
           image: AssetImage('assets/list-button-bg.png'),
-          child: Text(text),
-          align: Alignment.bottomCenter,
-          padding: EdgeInsets.all(8),
+          child: Text(text, style: TextStyle(fontSize: 25), textAlign: TextAlign.center,),
+          align: Alignment.center,
+          padding: EdgeInsets.all(4),
           onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => nextScreen))
       );
   }

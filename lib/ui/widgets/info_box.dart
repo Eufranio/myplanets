@@ -4,20 +4,22 @@ class InfoBox extends StatelessWidget {
 
   final Text value;
   final Text title;
-  final double size;
+  final double size, width, height;
 
   InfoBox({
     @required this.value,
     this.title,
-    this.size = 80
+    this.size = 80,
+    this.height,
+    this.width
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(4),
-      width: this.size,
-      height: this.size,
+      width: this.width ?? this.size,
+      height: this.height ?? this.size,
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.8),
         borderRadius: BorderRadius.circular(6.0),

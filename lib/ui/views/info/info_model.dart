@@ -12,13 +12,18 @@ class InfoModelScreen<T extends Model> extends StatefulWidget {
   InfoModelScreenState createState() => this.stateFunction.call();
 }
 
-abstract class InfoModelScreenState<T extends Model> extends State<InfoModelScreen> {
+abstract class InfoModelScreenState<T extends Model> extends State<InfoModelScreen<T>> {
 
   Iterable<Widget> getFields();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => widget.model.getEdit()))
+              .then((value) => this.setState(() { widget.model = value ?? widget.model; })),
+          child: Icon(Icons.edit),
+        ),
         body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -28,20 +33,7 @@ abstract class InfoModelScreenState<T extends Model> extends State<InfoModelScre
             children: <Widget>[
               AppBar(
                 backgroundColor: Colors.transparent,
-                elevation: 0,
-                actions: <Widget>[
-                  IconButton(
-                      color: Colors.white,
-                      icon: Icon(Icons.edit, size: 20),
-                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => widget.model.getEdit()))
-                          .then((value) {
-                        setState(() {
-                          if (value != null)
-                            widget.model = value;
-                        });
-                      })
-                  )
-                ]
+                elevation: 0
               ),
               SizedBox(
                 height: 300,
