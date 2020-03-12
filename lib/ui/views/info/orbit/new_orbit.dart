@@ -18,11 +18,34 @@ class EditOrbitState extends EditModelScreenState<Orbit, OrbitCRUD> {
   var stars = List<Star>();
   var satellites = List<NaturalSatellite>();
 
-  InputDecoration decoration = InputDecoration(
+  var decoration = InputDecoration(
       fillColor: Colors.white.withOpacity(0.5),
       filled: true,
       border: UnderlineInputBorder(borderRadius: BorderRadius.circular(10))
   );
+
+  @override
+  bool save(context) {
+    if ([editingModel.satellite == null,
+         editingModel.star == null,
+         editingModel.planet == null].where((e) => e).length >= 2) {
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text('Erro'),
+          content: Text('Você precisa selecionar pelo menos duas entidades para criar uma órbita!'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Fechar'),
+              onPressed: () => Navigator.of(context).pop(),
+            )
+          ],
+        )
+      );
+      return false;
+    }
+    return true;
+  }
 
   @override
   Iterable<Widget> getFields() {
@@ -73,9 +96,12 @@ class EditOrbitState extends EditModelScreenState<Orbit, OrbitCRUD> {
         height: 50, width: 320,
         child: planet,
       ),
-      SizedBox(
-        height: 50, width: 320,
-        child: star,
+      Padding(
+        padding: EdgeInsets.fromLTRB(35, 20, 35, 20),
+        child: SizedBox(
+          height: 50, width: 320,
+          child: star,
+        )
       ),
       SizedBox(
         height: 50, width: 320,
@@ -86,37 +112,47 @@ class EditOrbitState extends EditModelScreenState<Orbit, OrbitCRUD> {
 
   Widget buildPlanetList() {
     return CustomDropdownButtonFormField(
-      onSaved: (val) => editingModel.planet = val.id,
+      onSaved: (val) => editingModel.planet = val?.id,
       onChanged: (_) {},
-      decoration: decoration.copyWith(hintText: 'bondia'),
+      value: editingModel.planet == null ? null : planets.firstWhere((e) => e.id == editingModel.planet, orElse: () => null),
+      decoration: decoration.copyWith(hintText: 'Planeta'),
       items: planets.map((planet) => DropdownMenuItem(
         value: planet,
-        child: Text(planet.name),
-      )).toList(),
+        child: Text(planet.name ?? 'Unknown'),
+      )).toList() + [noneButton<Planet>(Planet())],
     );
   }
 
   Widget buildStarList() {
     return CustomDropdownButtonFormField(
-      onSaved: (val) => editingModel.star = val.id,
+      onSaved: (val) => editingModel.star = val?.id,
       onChanged: (_) {},
-      decoration: decoration.copyWith(hintText: 'bondia'),
+      value: editingModel.star == null ? null : stars.firstWhere((e) => e.id == editingModel.star, orElse: () => null),
+      decoration: decoration.copyWith(hintText: 'Estrela'),
       items: stars.map((star) => DropdownMenuItem(
         value: star,
-        child: Text(star.name),
-      )).toList(),
+        child: Text(star.name ?? 'Unknown'),
+      )).toList() + [noneButton<Star>(Star())],
     );
   }
 
   Widget buildSatelliteList() {
     return CustomDropdownButtonFormField(
-      onSaved: (val) => editingModel.satellite = val.id,
+      onSaved: (val) => editingModel.satellite = val?.id,
       onChanged: (_) {},
-      decoration: decoration.copyWith(hintText: 'bondia'),
+      value: editingModel.satellite == null ? null : satellites.firstWhere((e) => e.id == editingModel.satellite, orElse: () => null),
+      decoration: decoration.copyWith(hintText: 'Satélite Natural'),
       items: satellites.map((satellite) => DropdownMenuItem(
         value: satellite,
-        child: Text(satellite.name),
-      )).toList(),
+        child: Text(satellite.name ?? 'Unknown'),
+      )).toList() + [noneButton<NaturalSatellite>(NaturalSatellite())],
+    );
+  }
+  
+  DropdownMenuItem<T> noneButton<T>(T value) {
+    return DropdownMenuItem<T>(
+      value: value,
+      child: Text('Nenhum')
     );
   }
 

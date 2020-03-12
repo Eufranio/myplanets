@@ -110,8 +110,7 @@ class _ListEntitiesSpecificState<T extends CRUD> extends State<ListEntitiesSpeci
                   padding: EdgeInsets.symmetric(vertical: 20),
                   child: ImageButton(
                       image: AssetImage('assets/button-search-planet.png'),
-                      child: widget.childInfoFunction?.call(showingItems[index]) ??
-                          Text(showingItems[index].name, style: TextStyle(fontSize: 35)),
+                      child: widget.childInfoFunction?.call(showingItems[index]) ?? Text(showingItems[index].name, style: TextStyle(fontSize: 35)),
                       padding: EdgeInsets.only(right: 30),
                       align: Alignment.centerRight,
                       expandBox: widget.buttonSize,
@@ -121,10 +120,19 @@ class _ListEntitiesSpecificState<T extends CRUD> extends State<ListEntitiesSpeci
                               .then((val) {setState(() {});}),
                       popupButton: PopupMenuButton(
                         itemBuilder: (_) => [
-                          PopupMenuItem(value: 1, child: Text('Teste')),
-                          PopupMenuItem(value: 1, child: Text('Teste2')),
-                          PopupMenuItem(value: 1, child: Text('Teste3'))
-                        ]
+                          PopupMenuItem(value: 1, child: Text('Editar')),
+                          PopupMenuItem(value: 2, child: Text('Deletar'))
+                        ],
+                        onSelected: (val) async {
+                          if (val == 1) {
+                            Navigator.push(context, MaterialPageRoute(
+                                builder: (_) => showingItems[index].getEdit()))
+                                .then((val) {setState(() {});});
+                          } else if (val == 2) {
+                            await Provider.of<T>(context, listen: false).remove(showingItems.removeAt(index).id);
+                            setState(() {});
+                          }
+                        },
                     ),
                   )
               )

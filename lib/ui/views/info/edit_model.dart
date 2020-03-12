@@ -42,19 +42,11 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
     }
   }
 
-
-  bool estado(int x){
-
-
-    return true;
-  }
-
-
-
   String getTitle();
 
   Iterable<Widget> getFields();
 
+  bool save(context) => true;
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +90,7 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
                         Padding(
                           padding: const EdgeInsets.fromLTRB(90, 20, 80, 20),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: widget.model == null ? MainAxisAlignment.center : MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               //widget.model != null ? SizedBox.shrink() :
                               Center(
@@ -111,6 +103,7 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                     onPressed: () async {
                                       formKey.currentState.save();
+                                      if (!this.save(context)) return;
                                       Navigator.of(context).pop(editingModel);
                                       if (widget.model != null) {
                                         await Provider.of<U>(context, listen: false).update(editingModel, editingModel.id);
@@ -121,9 +114,7 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
                                   )
                                 ),
                               ),
-                              Visibility(
-                                visible: estado(1),
-                              child:
+                              widget.model == null ? SizedBox.shrink() :
                               SizedBox(
                                 height: 50,
                                 width: 100,
@@ -143,7 +134,6 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
                                     Navigator.of(context).pop();
                                   },
                                 )
-                              ),
                               ),
                             ],
                           ),

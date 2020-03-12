@@ -8,7 +8,7 @@ class InfoBox extends StatelessWidget {
 
   InfoBox({
     @required this.value,
-    @required this.title,
+    this.title,
     this.size = 80
   });
 
@@ -29,6 +29,7 @@ class InfoBox extends StatelessWidget {
             alignment: Alignment.topCenter,
             child: this.value
           ),
+          this.title == null ? SizedBox.shrink() :
           Align(
             alignment: Alignment.bottomCenter,
             child: this.title,

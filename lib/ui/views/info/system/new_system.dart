@@ -15,20 +15,6 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD>{
   }
 
   @override
-  Future<void> onSave() async {
-    await Provider.of<SystemCRUD>(context, listen: false).remove(editingModel.id);
-    Navigator.of(context).pop();
-    Navigator.of(context).pop();
-  }
-
-  @override
-  Future<void> onDelete() async {
-    await Provider.of<SystemCRUD>(context, listen: false).remove(editingModel.id);
-    Navigator.of(context).pop();
-    Navigator.of(context).pop();
-  }
-
-  @override
   Iterable<Widget> getFields() {
     var nome = TextFormField(
       onSaved: (val) => editingModel.name = val,
