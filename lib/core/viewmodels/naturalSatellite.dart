@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:planets/ui/views/info/edit_model.dart';
+import 'package:planets/ui/views/info/info_model.dart';
 import 'package:planets/ui/views/info/satellite/new_satellite.dart';
+import 'package:planets/ui/views/info/satellite/satellite_info.dart';
 
 import 'model.dart';
 
@@ -36,7 +38,7 @@ class NaturalSatellite extends Model {
     };
   }
 
-  Widget getInfo() => null;
+  Widget getInfo() => InfoModelScreen(this, () => SatelliteInfoState());
 
   Widget getEdit() => EditModelScreen(this, () => NaturalSatellite(), () => EditSatelliteState());
 
