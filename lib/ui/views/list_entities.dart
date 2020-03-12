@@ -13,6 +13,7 @@ import 'package:planets/ui/views/info/edit_model.dart';
 import 'package:planets/ui/views/info/galaxy/new_galaxy.dart';
 import 'package:planets/ui/views/info/orbit/new_orbit.dart';
 import 'package:planets/ui/views/info/satellite/new_satellite.dart';
+import 'package:planets/ui/views/info/star/new_star.dart';
 import 'package:planets/ui/views/info/system/new_system.dart';
 import 'package:planets/ui/views/info/planet/new_planet.dart';
 import 'package:planets/ui/widgets/image_button.dart';
@@ -80,7 +81,7 @@ class ListEntitiesScreen extends StatelessWidget {
               'Sistema Planetário'),
           buildButton(context, ListEntitiesSpecificScreen<StarCRUD>(
               editScreen: EditModelScreen(
-                  null, () => Star(), () => EditPlanetState())), 'Estrelas'),
+                  null, () => Star(), () => EditStarState())), 'Estrelas'),
           buildButton(context, ListEntitiesSpecificScreen<SatelliteCRUD>(
               editScreen: EditModelScreen(
                   null, () => NaturalSatellite(), () => EditSatelliteState())),

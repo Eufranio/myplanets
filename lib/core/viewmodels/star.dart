@@ -9,10 +9,9 @@ class Star extends Model {
       age,
       size,
       distance,
-      death,
-      gravity;
+      death;
 
-  int type;
+  StarType type;
 
   bool isBlackHole;
 
@@ -25,7 +24,7 @@ class Star extends Model {
         size = snapshot['size'],
         distance = snapshot['distance'],
         death = snapshot['death'],
-        type = int.parse(snapshot['type']);
+        type = StarType.values[snapshot['type']];
 
   toJson() {
     return {
@@ -34,7 +33,7 @@ class Star extends Model {
       "size": size,
       "distance": distance,
       "death": death,
-      "type": type
+      "type": type.index
     };
   }
 
@@ -42,4 +41,12 @@ class Star extends Model {
 
   Widget getEdit() => null;
 
+}
+
+enum StarType {
+  RedDwarf,
+  WhiteDwarf,
+  BinaryStar,
+  BlueGiant,
+  RedGiant
 }
