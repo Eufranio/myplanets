@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:planets/core/services/orbitCrud.dart';
+import 'package:planets/core/services/satelliteCrud.dart';
+import 'package:planets/core/viewmodels/orbit.dart';
 import 'package:planets/core/viewmodels/planetModel.dart';
+import 'package:planets/ui/views/list_models.dart';
 import 'package:planets/ui/widgets/image_button.dart';
 import 'package:planets/ui/widgets/info_box.dart';
 
@@ -17,12 +21,19 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
   Widget showOrbitants(context) {
 
     Widget satellites = ListView(
-      padding: EdgeInsets.all(8),
-      children: widget.planet.satellites.map((e) => Container(
-        height: 60,
-        color: Colors.amber[600],
-        child: Center(child: Text(e)),
-      )).toList()
+      children: ListTile.divideTiles(
+          context: context,
+          tiles: <Widget>[
+            ListTile(
+              title: Text('Satélites'),
+              onTap: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (_) =>
+                      ListModelsScreen<OrbitCRUD, Orbit>((orbit) => orbit.planet == widget.planet.id)
+                  )
+              ),
+            )
+          ]
+      ).toList(),
     );
 
     AlertDialog dialog = AlertDialog(
@@ -34,8 +45,10 @@ class _PlanetInfoState extends State<PlanetInfoScreen> {
       ),
       actions: <Widget>[
         FlatButton(
-          child: Text('Teste'),
-          onPressed: () {},
+          child: Text('Fechar'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         )
       ],
     );

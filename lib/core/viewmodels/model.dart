@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 abstract class Model {
   Widget getInfo();
   Widget getEdit();
+  Widget getDisplayButton(context) => null;
   String name;
   String id;
 
