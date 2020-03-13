@@ -69,38 +69,41 @@ class ListEntitiesScreen extends StatelessWidget {
                       null, () => Galaxy(), () => EditGalaxyState()),
                   childInfoFunction: EditGalaxyState.shortInfo,
                   buttonSize: 130),
-              'Galáxias'),
+              'Galáxias', 'assets/list-button-galaxy.png'),
           buildButton(context, ListEntitiesSpecificScreen<SystemCRUD>(
               editScreen: EditModelScreen(
                   null, () => System(), () => EditSystemState())),
-              'Sistemas Planetários'),
+              'Sistemas Planetários','assets/list-button-system.png'),
           buildButton(context,
               ListEntitiesSpecificScreen<PlanetCRUD>(
                   editScreen: EditModelScreen(
                       null, () => Planet(), () => EditPlanetState())),
-              'Planetas'),
+              'Planetas','assets/list-button-bg.png'),
           buildButton(context, ListEntitiesSpecificScreen<SatelliteCRUD>(
               editScreen: EditModelScreen(
                   null, () => NaturalSatellite(), () => EditSatelliteState())),
-              'Satélites Naturais'),
+              'Satélites Naturais','assets/list-button-satellite.png'),
           buildButton(context, ListEntitiesSpecificScreen<StarCRUD>(
               editScreen: EditModelScreen(
-                  null, () => Star(), () => EditStarState())), 'Estrelas'),
+                  null, () => Star(), () => EditStarState())), 'Estrelas', 'assets/list-button-star.png'),
           buildButton(context, ListEntitiesSpecificScreen<OrbitCRUD>(
             editScreen: EditModelScreen(
                 null, () => Orbit(), () => EditOrbitState()
             ),
-          ), 'Órbitas')
+          ), 'Órbitas', 'assets/list-button-bg.png')
         ]
     );
   }
 
-  Widget buildButton(context, nextScreen, text) {
+  Widget buildButton(context, nextScreen, text, image) {
     return ImageButton(
-          image: AssetImage('assets/list-button-bg.png'),
-          child: Text(text, style: TextStyle(fontSize: 25), textAlign: TextAlign.center,),
-          align: Alignment.center,
-          padding: EdgeInsets.all(4),
+          image: AssetImage(image),
+
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Text(text, style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
+          ),
+          align: Alignment.bottomCenter,
           onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => nextScreen))
       );
   }
