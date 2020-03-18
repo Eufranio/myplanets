@@ -52,6 +52,7 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
   Widget build(BuildContext context) {
     return new Scaffold(
       body: Container(
+        height: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage('assets/backg.png'), fit: BoxFit.cover),
@@ -87,7 +88,9 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
                         ),
                       ] + this.getFields()
                         + [
-                        Padding(
+                          Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Padding(
                           padding: const EdgeInsets.fromLTRB(90, 20, 80, 20),
                           child: Row(
                             mainAxisAlignment: widget.model == null ? MainAxisAlignment.center : MainAxisAlignment.spaceBetween,
@@ -137,7 +140,7 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
                               ),
                             ],
                           ),
-                        ),
+                        )),
                       ]
                   )
               )

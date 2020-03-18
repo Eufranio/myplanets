@@ -8,7 +8,8 @@ class System extends Model {
 
   String id,
       name,
-      age;
+      age,
+      galaxy;
 
   int get planetCount => this.planets.length;
   int get starCount => this.stars.length;
@@ -22,14 +23,16 @@ class System extends Model {
         name = snapshot['name'],
         age = snapshot['age'],
         planets = List.from(snapshot['planets'] ?? []),
-        stars = List.from(snapshot['stars'] ?? []);
+        stars = List.from(snapshot['stars'] ?? []),
+        galaxy = snapshot['galaxy'];
 
   toJson() {
     return {
       "name": name,
       "age": age,
       "planets": planets,
-      "stars": stars
+      "stars": stars,
+      "galaxy": galaxy
     };
   }
 

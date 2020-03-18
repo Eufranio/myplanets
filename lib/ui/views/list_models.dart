@@ -69,7 +69,7 @@ class _ListModelsScreenState<T extends CRUD, U> extends State<ListModelsScreen<T
                     padding: EdgeInsets.all(8),
                     onPressed: () =>
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => e.getEdit()))
+                            MaterialPageRoute(builder: (_) => e.getInfo()))
                 ))).toList(),
       ),
     );

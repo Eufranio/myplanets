@@ -15,9 +15,9 @@ class Planet extends Model {
       gravity,
       composition;
 
-  List<String> satellites = [], stars = [];
+  List<String> systems;
 
-  Planet({this.id, this.name, this.size, this.weight, this.gravity, this.composition, this.satellites, this.stars});
+  Planet({this.id, this.name, this.size, this.weight, this.gravity, this.composition, this.systems});
 
   Planet.fromMap(String id, Map snapshot) :
         id = id,
@@ -26,8 +26,7 @@ class Planet extends Model {
         weight = snapshot['weight'],
         gravity = snapshot['gravity'],
         composition = snapshot['description'],
-        satellites = snapshot['satellites'] ?? [],
-        stars = snapshot['stars'] ?? [];
+        systems = List.from(snapshot['systems'] ?? []);
 
   toJson() {
     return {
@@ -36,8 +35,7 @@ class Planet extends Model {
       "weight": weight,
       "gravity": gravity,
       "description": composition,
-      "satellites": satellites,
-      "stars": stars
+      "systems": systems
     };
   }
 
