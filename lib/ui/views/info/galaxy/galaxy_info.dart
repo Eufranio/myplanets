@@ -9,6 +9,9 @@ import 'package:planets/ui/widgets/info_box.dart';
 class GalaxyInfoState extends InfoModelScreenState<Galaxy> {
 
   @override
+  String getImage() => 'assets/galaxy.png';
+
+  @override
   String getTitle() => 'Galáxia';
 
   Iterable<Widget> getFields() {

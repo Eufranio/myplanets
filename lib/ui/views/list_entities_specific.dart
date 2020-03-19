@@ -11,12 +11,14 @@ class ListEntitiesSpecificScreen<T extends CRUD> extends StatefulWidget {
   ListEntitiesSpecificScreen({
     @required this.editScreen,
     this.childInfoFunction,
-    this.buttonSize = 80
+    this.buttonSize = 80,
+    this.buttonImage = 'assets/bg-list-entities-2.png'
   });
 
   final double buttonSize;
   final Widget editScreen;
   final Function childInfoFunction;
+  final String buttonImage;
 
   @override
   _ListEntitiesSpecificState createState() => _ListEntitiesSpecificState<T>();
@@ -109,7 +111,7 @@ class _ListEntitiesSpecificState<T extends CRUD> extends State<ListEntitiesSpeci
               Padding(
                   padding: EdgeInsets.symmetric(vertical: 20),
                   child: ImageButton(
-                      image: AssetImage('assets/button-search-planet.png'),
+                      image: AssetImage(widget.buttonImage),
                       child: widget.childInfoFunction?.call(showingItems[index]) ?? Text(showingItems[index].name, style: TextStyle(fontSize: 35)),
                       padding: EdgeInsets.only(right: 30),
                       align: Alignment.centerRight,

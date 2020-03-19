@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:planets/core/services/galaxyCrud.dart';
 import 'package:planets/core/services/planetCrud.dart';
 import 'package:planets/core/services/starCrud.dart';
 import 'package:planets/core/services/systemCrud.dart';
+import 'package:planets/core/viewmodels/galaxy.dart';
 import 'package:planets/core/viewmodels/model.dart';
 import 'package:planets/core/viewmodels/planetModel.dart';
 import 'package:planets/core/viewmodels/star.dart';
 import 'package:planets/core/viewmodels/system.dart';
 import 'package:planets/ui/views/info/edit_model.dart';
+import 'package:planets/ui/widgets/custom_dropdown.dart';
 import 'package:planets/ui/widgets/info_box.dart';
 import 'package:planets/ui/widgets/relation_list.dart';
 import 'package:provider/provider.dart';
@@ -62,9 +65,29 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD> {
 
   var planets = Map<String, Planet>();
   var stars = Map<String, Star>();
+  var galaxies = Map<String, Galaxy>();
 
   @override
   bool save(context) {
+    if (editingModel.galaxy == null) {
+      showDialog(
+          context: context,
+          builder: (_) =>
+              AlertDialog(
+                title: Text('Erro'),
+                content: Text(
+                    'Você precisa selecionar uma galáxia para criar um sistema planetário!'),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text('Fechar'),
+                    onPressed: () => Navigator.of(context).pop(),
+                  )
+                ],
+              )
+      );
+      return false;
+    }
+
     if (this.planets.isNotEmpty)
       editingModel.planets.forEach((id) async {
         var planet = planets[id];
@@ -85,6 +108,10 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD> {
         }
       });
 
+    var galaxy = galaxies[editingModel.galaxy];
+    galaxy.systems.add(editingModel.id);
+    Provider.of<GalaxyCRUD>(context, listen: false).update(galaxy, galaxy.id);
+
     return true;
   }
 
@@ -97,6 +124,7 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD> {
   Iterable<Widget> getFields() {
     var planetProvider = Provider.of<PlanetCRUD>(context, listen: false);
     var starProvider = Provider.of<StarCRUD>(context, listen: false);
+    var galaxyCrud = Provider.of<GalaxyCRUD>(context, listen: false);
 
     var nome = TextFormField(
       onSaved: (val) => editingModel.name = val,
@@ -204,6 +232,32 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD> {
             )
     );
 
+    var decoration = InputDecoration(
+        fillColor: Colors.white.withOpacity(0.5),
+        filled: true,
+        border: UnderlineInputBorder(borderRadius: BorderRadius.circular(10))
+    );
+
+    var galaxy = FutureBuilder(
+      future: galaxyCrud.fetch(),
+        builder: (context, AsyncSnapshot<List<Model>> snapshot) {
+          if (snapshot.hasData) {
+            this.galaxies = Map.fromIterable(snapshot.data.cast<Galaxy>(), key: (e) => e.id, value: (e) => e);
+            return CustomDropdownButtonFormField(
+              onSaved: (val) => editingModel.galaxy = val?.id,
+              onChanged: (_) {},
+              value: editingModel.galaxy == null ? null : galaxies[editingModel.galaxy],
+              decoration: decoration.copyWith(hintText: 'Galáxia'),
+              items: galaxies.values.map((galaxy) => DropdownMenuItem(
+                value: galaxy,
+                child: Text(galaxy.name ?? 'Unknown'),
+              )).toList()
+            );
+          }
+          return SizedBox.fromSize(size: Size.square(50), child: CircularProgressIndicator());
+        }
+    );
+
     return [
       SizedBox(height: 50, width: 320,
         child: nome,
@@ -213,6 +267,8 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD> {
       SizedBox(height: 50, width: 320,
         child: idade,
       ),
+      SizedBox(height: 20, width: 0),
+      SizedBox(height: 50, width: 320, child: galaxy),
       SizedBox(height: 20, width: 0),
       Padding(
         padding: EdgeInsets.only(left: 10),
@@ -225,7 +281,7 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD> {
             SizedBox(height: 0, width: 20),
             SizedBox(height: 45, width: 115, child: starsButton),
             SizedBox(height: 0, width: 1),
-            SizedBox(height: 45, width: 55, child: addStar)
+            SizedBox(height: 45, width: 55, child: addStar),
           ],
         ),
       )

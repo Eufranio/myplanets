@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:planets/ui/views/info/edit_model.dart';
+import 'package:planets/ui/views/info/info_model.dart';
 import 'package:planets/ui/views/info/system/new_system.dart';
+import 'package:planets/ui/views/info/system/system_info.dart';
 
 import 'model.dart';
 
@@ -36,7 +38,7 @@ class System extends Model {
     };
   }
 
-  Widget getInfo() => null;
+  Widget getInfo() => InfoModelScreen(this, () => SystemInfoState());
 
   Widget getEdit() => EditModelScreen(this, () => System(), () => EditSystemState());
 

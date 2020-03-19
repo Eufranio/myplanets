@@ -65,34 +65,42 @@ class ListEntitiesScreen extends StatelessWidget {
         children: [
           buildButton(context,
               ListEntitiesSpecificScreen<GalaxyCRUD>(
-                  editScreen: EditModelScreen(
-                      null, () => Galaxy(), () => EditGalaxyState()),
+                  editScreen: EditModelScreen(null, () => Galaxy(), () => EditGalaxyState()),
                   childInfoFunction: EditGalaxyState.shortInfo,
+                  buttonImage: 'assets/button-search-galaxy.png',
                   buttonSize: 130),
               'Galáxias', 'assets/list-button-galaxy.png'),
-          buildButton(context, ListEntitiesSpecificScreen<SystemCRUD>(
-              editScreen: EditModelScreen(
-                  null, () => System(planets: [], stars: []), () => EditSystemState()),
-            childInfoFunction: EditSystemState.shortInfo,
-            buttonSize: 120),
+
+          buildButton(context,
+              ListEntitiesSpecificScreen<SystemCRUD>(
+                  editScreen: EditModelScreen(null, () => System(planets: [], stars: []), () => EditSystemState()),
+                  childInfoFunction: EditSystemState.shortInfo,
+                  buttonImage: 'assets/button-search-system.png',
+                  buttonSize: 120),
               'Sistemas Planetários','assets/list-button-system.png'),
+
           buildButton(context,
               ListEntitiesSpecificScreen<PlanetCRUD>(
-                  editScreen: EditModelScreen(
-                      null, () => Planet(), () => EditPlanetState())),
+                  editScreen: EditModelScreen(null, () => Planet(), () => EditPlanetState()),
+                  buttonImage: 'assets/button-search-planet.png'),
               'Planetas','assets/list-button-bg.png'),
-          buildButton(context, ListEntitiesSpecificScreen<SatelliteCRUD>(
-              editScreen: EditModelScreen(
-                  null, () => NaturalSatellite(), () => EditSatelliteState())),
+
+          buildButton(context,
+              ListEntitiesSpecificScreen<SatelliteCRUD>(
+                  editScreen: EditModelScreen(null, () => NaturalSatellite(), () => EditSatelliteState()),
+                  buttonImage: 'assets/button-search-system.png'),
               'Satélites Naturais','assets/list-button-satellite.png'),
-          buildButton(context, ListEntitiesSpecificScreen<StarCRUD>(
-              editScreen: EditModelScreen(
-                  null, () => Star(), () => EditStarState())), 'Estrelas', 'assets/list-button-star.png'),
-          buildButton(context, ListEntitiesSpecificScreen<OrbitCRUD>(
-            editScreen: EditModelScreen(
-                null, () => Orbit(), () => EditOrbitState()
-            ),
-          ), 'Órbitas', 'assets/list-button-bg.png')
+
+          buildButton(context,
+              ListEntitiesSpecificScreen<StarCRUD>(
+                  editScreen: EditModelScreen(null, () => Star(), () => EditStarState()),
+                  buttonImage: 'assets/button-search-star.png'),
+              'Estrelas', 'assets/list-button-star.png'),
+
+          buildButton(context,
+              ListEntitiesSpecificScreen<OrbitCRUD>(
+                editScreen: EditModelScreen(null, () => Orbit(), () => EditOrbitState())),
+              'Órbitas', 'assets/list-button-bg.png')
         ]
     );
   }

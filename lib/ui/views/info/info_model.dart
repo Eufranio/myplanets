@@ -16,6 +16,8 @@ abstract class InfoModelScreenState<T extends Model> extends State<InfoModelScre
 
   Iterable<Widget> getFields();
 
+  String getImage() => 'assets/planet.png';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +47,7 @@ abstract class InfoModelScreenState<T extends Model> extends State<InfoModelScre
                       child: Container(
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                              fit: BoxFit.fill, image: AssetImage('assets/planet.png')),
+                              fit: BoxFit.fill, image: AssetImage(this.getImage())),
                         ),
                       ),
                     ),

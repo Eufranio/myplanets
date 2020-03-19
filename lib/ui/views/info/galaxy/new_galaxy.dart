@@ -5,6 +5,7 @@ import 'package:planets/core/viewmodels/galaxy.dart';
 import 'package:planets/core/viewmodels/system.dart';
 import 'package:planets/ui/views/info/edit_model.dart';
 import 'package:planets/ui/widgets/info_box.dart';
+import 'package:planets/ui/widgets/relation_list.dart';
 import 'package:provider/provider.dart';
 
 class EditGalaxyState extends EditModelScreenState<Galaxy, GalaxyCRUD> {
@@ -54,6 +55,22 @@ class EditGalaxyState extends EditModelScreenState<Galaxy, GalaxyCRUD> {
         );
   }
 
+  var systems = Map<String, System>();
+
+  @override
+  bool save(context) {
+    if (this.systems.isNotEmpty)
+      editingModel.systems.forEach((id) async {
+        var system = systems[id];
+        if (system.galaxy != editingModel.id) {
+          system.galaxy = editingModel.id;
+          await Provider.of<SystemCRUD>(context, listen: false).update(system, system.id);
+        }
+      });
+
+    return true;
+  }
+
   @override
   String getTitle() {
     return 'Galáxia';
@@ -91,10 +108,54 @@ class EditGalaxyState extends EditModelScreenState<Galaxy, GalaxyCRUD> {
               borderSide: BorderSide.none)),
     );
 
+    var systemButton = RelationListButton(
+      future: Provider.of<SystemCRUD>(context, listen: false).fetch(),
+      isEmpty: editingModel.systems.isEmpty,
+      title: 'Sistemas',
+      consumer: (list) => this.systems = Map.fromIterable(list.cast<System>(), key: (e) => e.id, value: (e) => e),
+      filter: (model) => editingModel.systems.contains(model.id),
+      trailing: (model) =>
+          IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                editingModel.systems.remove(model.id);
+                Navigator.pop(context);
+              }
+          ),
+    );
+
+    var addSystem = FlatButton(
+      color: Colors.deepPurple[800],
+      child: Icon(Icons.add, color: Colors.white),
+      shape: CircleBorder(),
+      onPressed: () =>
+          showDialog(context: context, builder: (context) =>
+              RelationListButton.buildDialog(
+                  'Sistemas', context, FutureList<System>(
+                future: Provider.of<SystemCRUD>(context, listen: false).fetch(),
+                nameFunction: (system) => system.name,
+                onTap: (system) {
+                  if (!editingModel.systems.contains(system.id))
+                    editingModel.systems.add(system.id);
+                  Navigator.of(context).pop();
+                },
+              ))
+          ),
+    );
+
     return [
       SizedBox(height: 50, width: 320, child: nome),
       SizedBox(height: 20, width: 0),
-      SizedBox(height: 50, width: 320, child: distancia)
+      SizedBox(height: 50, width: 320, child: distancia),
+      SizedBox(height: 20, width: 0),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          SizedBox(height: 45, width: 120, child: systemButton),
+          SizedBox(height: 0, width: 1),
+          SizedBox(height: 45, width: 55, child: addSystem)
+        ],
+      )
     ];
   }
 
