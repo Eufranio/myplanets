@@ -72,7 +72,9 @@ class ListEntitiesScreen extends StatelessWidget {
               'Galáxias', 'assets/list-button-galaxy.png'),
           buildButton(context, ListEntitiesSpecificScreen<SystemCRUD>(
               editScreen: EditModelScreen(
-                  null, () => System(), () => EditSystemState())),
+                  null, () => System(planets: [], stars: []), () => EditSystemState()),
+            childInfoFunction: EditSystemState.shortInfo,
+            buttonSize: 120),
               'Sistemas Planetários','assets/list-button-system.png'),
           buildButton(context,
               ListEntitiesSpecificScreen<PlanetCRUD>(

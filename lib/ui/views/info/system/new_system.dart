@@ -1,15 +1,92 @@
 import 'package:flutter/material.dart';
 import 'package:planets/core/services/planetCrud.dart';
+import 'package:planets/core/services/starCrud.dart';
 import 'package:planets/core/services/systemCrud.dart';
+import 'package:planets/core/viewmodels/model.dart';
 import 'package:planets/core/viewmodels/planetModel.dart';
+import 'package:planets/core/viewmodels/star.dart';
 import 'package:planets/core/viewmodels/system.dart';
 import 'package:planets/ui/views/info/edit_model.dart';
+import 'package:planets/ui/widgets/info_box.dart';
+import 'package:planets/ui/widgets/relation_list.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/services/systemCrud.dart';
 
 
-class EditSystemState extends EditModelScreenState<System, SystemCRUD>{
+class EditSystemState extends EditModelScreenState<System, SystemCRUD> {
+
+  static Function get shortInfo {
+    return (System val) =>
+        Padding(
+            padding: EdgeInsets.symmetric(vertical: 8),
+            child: Row(
+                children: <Widget>[
+                  SizedBox(width: 120),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Text(val.name, style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            InfoBox(
+                              value: Text(val.starCount.toString(), style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.deepPurple,
+                                  fontWeight: FontWeight.bold)),
+                              title: Text('Estrelas', style: TextStyle(
+                                  fontSize: 10, color: Colors.deepPurple)),
+                              size: 65,
+                            ),
+                            InfoBox(
+                              value: Text(val.planetCount.toString(), style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.deepPurple,
+                                  fontWeight: FontWeight.bold)),
+                              title: Text('Planetas', style: TextStyle(
+                                  fontSize: 10, color: Colors.deepPurple)),
+                              size: 65,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ]
+            )
+        );
+  }
+
+  var planets = Map<String, Planet>();
+  var stars = Map<String, Star>();
+
+  @override
+  bool save(context) {
+    if (this.planets.isNotEmpty)
+      editingModel.planets.forEach((id) async {
+        var planet = planets[id];
+        if (!planet.systems.contains(editingModel.id)) {
+          planet.systems.add(editingModel.id);
+          await Provider.of<PlanetCRUD>(context, listen: false).update(
+              planet, planet.id);
+        }
+      });
+
+    if (this.stars.isNotEmpty)
+      editingModel.stars.forEach((id) async {
+        var star = stars[id];
+        if (!star.systems.contains(editingModel.id)) {
+          star.systems.add(editingModel.id);
+          await Provider.of<StarCRUD>(context, listen: false).update(
+              star, star.id);
+        }
+      });
+
+    return true;
+  }
 
   @override
   String getTitle() {
@@ -19,6 +96,7 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD>{
   @override
   Iterable<Widget> getFields() {
     var planetProvider = Provider.of<PlanetCRUD>(context, listen: false);
+    var starProvider = Provider.of<StarCRUD>(context, listen: false);
 
     var nome = TextFormField(
       onSaved: (val) => editingModel.name = val,
@@ -48,61 +126,82 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD>{
               borderSide: BorderSide.none)),
     );
 
-    var planetas = RaisedButton.icon(
-      color: Colors.deepPurple[900],
-      icon: Icon(Icons.public, size: 20, color: Colors.white,),
-      label: Text('Planetas', style: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-          fontSize: 15
-      )),
-      onPressed: () async {
-        List<Planet> planets = (await planetProvider.fetch())
-            .cast<Planet>()
-            .where((planet) => widget.model.planets.contains(planet.id))
-            .toList();
-        showDialog(context: context, builder: (context) =>
-            buildDialog(widget.model.planets.isEmpty, 'Planetas', ListView.builder(
-                itemCount: planets.length,
-                itemBuilder: (context, index) =>
-                    ListTile(
-                      title: Text(planets[index].name),
-                      onTap: () =>
-                          Navigator.push(context, MaterialPageRoute(
-                              builder: (_) => planets[index].getInfo())),
-                    )
-            )));
-      },
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    var planetsButton = RelationListButton(
+      future: planetProvider.fetch(),
+      isEmpty: editingModel.planets.isEmpty,
+      title: 'Planetas',
+      consumer: (list) =>
+      planets = Map.fromIterable(
+          list.cast<Planet>(), key: (e) => e.id, value: (e) => e),
+      filter: (model) => editingModel.planets.contains(model.id),
+      trailing: (model) =>
+          IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                editingModel.planets.remove(model.id);
+                Navigator.pop(context);
+              }
+          ),
     );
 
-    var add = FlatButton(
-      color: Colors.deepPurple[900],
+    var addPlanet = FlatButton(
+      color: Colors.deepPurple[800],
       child: Icon(Icons.add, color: Colors.white),
       shape: CircleBorder(),
-      onPressed: () async {
-        List<Planet> planets = (await planetProvider.fetch()).cast<Planet>();
-        showDialog(context: context, builder: (context) =>
-            buildDialog(planets.isEmpty, 'Planetas', ListView.builder(
-                itemCount: planets.length,
-                itemBuilder: (context, index) =>
-                    ListTile(
-                        title: Text(planets[index].name),
-                        onTap: () async {
-                          var planet = planets[index];
+      onPressed: () =>
+          showDialog(context: context, builder: (context) =>
+              RelationListButton.buildDialog(
+                  'Planetas', context, FutureList<Planet>(
+                future: planetProvider.fetch(),
+                nameFunction: (planet) => planet.name,
+                onTap: (planet) {
+                  if (!editingModel.planets.contains(planet.id))
+                    editingModel.planets.add(planet.id);
+                  Navigator.of(context).pop();
+                },
+              ))
+          ),
+    );
 
-                          if (!widget.model.planets.contains(planet.id))
-                            widget.model.planets.add(planet.id);
 
-                          if (!planet.systems.contains(widget.model.id))
-                            planet.systems.add(widget.model.id);
-                          
-                          planetProvider.update(planet, planet.id);
-                          Navigator.of(context).pop();
-                        }
-                    )
-            )));
-      },
+    // ESTRELAS
+
+
+    var starsButton = RelationListButton(
+        future: starProvider.fetch(),
+        isEmpty: editingModel.stars.isEmpty,
+        title: 'Estrelas',
+        consumer: (list) =>
+        this.stars = Map.fromIterable(
+            list.cast<Star>(), key: (e) => e.id, value: (e) => e),
+        filter: (model) => editingModel.stars.contains(model.id),
+        trailing: (model) =>
+            IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () {
+                  editingModel.stars.remove(model.id);
+                  Navigator.pop(context);
+                }
+            )
+    );
+
+    var addStar = FlatButton(
+        color: Colors.deepPurple[800],
+        child: Icon(Icons.add, color: Colors.white),
+        shape: CircleBorder(),
+        onPressed: () =>
+            showDialog(context: context, builder: (context) =>
+                RelationListButton.buildDialog(
+                    'Estrelas', context, FutureList<Star>(
+                  future: starProvider.fetch(),
+                  nameFunction: (star) => star.name,
+                  onTap: (star) {
+                    if (!editingModel.stars.contains(star.id))
+                      editingModel.stars.add(star.id);
+                    Navigator.of(context).pop();
+                  },
+                ))
+            )
     );
 
     return [
@@ -115,13 +214,20 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD>{
         child: idade,
       ),
       SizedBox(height: 20, width: 0),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          SizedBox(height: 50, width: 130, child: planetas),
-          SizedBox(height: 0, width: 10),
-          SizedBox(height: 50, width: 55, child: add)
-        ],
+      Padding(
+        padding: EdgeInsets.only(left: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(height: 45, width: 115, child: planetsButton),
+            SizedBox(height: 0, width: 1),
+            SizedBox(height: 45, width: 55, child: addPlanet),
+            SizedBox(height: 0, width: 20),
+            SizedBox(height: 45, width: 115, child: starsButton),
+            SizedBox(height: 0, width: 1),
+            SizedBox(height: 45, width: 55, child: addStar)
+          ],
+        ),
       )
     ];
   }

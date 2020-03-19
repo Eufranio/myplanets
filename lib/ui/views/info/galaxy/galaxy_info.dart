@@ -22,12 +22,12 @@ class GalaxyInfoState extends InfoModelScreenState<Galaxy> {
                 style: TextStyle(
                     color: Colors.deepPurple,
                     fontWeight: FontWeight.bold,
-                    fontSize: 18)
+                    fontSize: 16)
             ),
             title: Text(
               'Distância', textAlign: TextAlign.center, style: TextStyle(
                 color: Colors.deepPurple,
-                fontSize: 16),
+                fontSize: 12),
             ),
           ),
           SizedBox.fromSize(size: Size.square(30)),
@@ -38,12 +38,12 @@ class GalaxyInfoState extends InfoModelScreenState<Galaxy> {
               style: TextStyle(
                   color: Colors.deepPurple,
                   fontWeight: FontWeight.bold,
-                  fontSize: 18),
+                  fontSize: 16),
             ),
             title: Text(
               'Sistemas', textAlign: TextAlign.center, style: TextStyle(
                 color: Colors.deepPurple,
-                fontSize: 16),
+                fontSize: 12),
             ),
           ),
         ],
