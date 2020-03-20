@@ -76,7 +76,7 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD> {
   );
 
   @override
-  bool save(context) {
+  Future<bool> save(context) async {
     if (editingModel.galaxy == null) {
       showDialog(
           context: context,
@@ -117,8 +117,10 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD> {
       });
 
     var galaxy = galaxies[editingModel.galaxy];
-    galaxy.systems.add(editingModel.id);
-    Provider.of<GalaxyCRUD>(context, listen: false).update(galaxy, galaxy.id);
+    if (!galaxy.systems.contains(editingModel.id)) {
+      galaxy.systems.add(editingModel.id);
+      Provider.of<GalaxyCRUD>(context, listen: false).update(galaxy, galaxy.id);
+    }
 
     return true;
   }
@@ -252,7 +254,14 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD> {
           if (snapshot.hasData) {
             this.galaxies = Map.fromIterable(snapshot.data.cast<Galaxy>(), key: (e) => e.id, value: (e) => e);
             return CustomDropdownButtonFormField(
-              onSaved: (val) => editingModel.galaxy = val?.id,
+              onSaved: (val) {
+                if (editingModel.galaxy != null) {
+                  var previousGalaxy = galaxies[editingModel.galaxy];
+                  previousGalaxy.systems.remove(editingModel.id);
+                  galaxyCrud.update(previousGalaxy, previousGalaxy.id);
+                }
+                editingModel.galaxy = val?.id;
+              },
               onChanged: (_) {},
               value: editingModel.galaxy == null ? null : galaxies[editingModel.galaxy],
               decoration: decoration.copyWith(hintText: 'Galáxia'),

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:planets/core/services/orbitCrud.dart';
+import 'package:planets/core/services/systemCrud.dart';
 import 'package:planets/core/viewmodels/orbit.dart';
 import 'package:planets/core/viewmodels/planetModel.dart';
+import 'package:planets/core/viewmodels/system.dart';
 import 'package:planets/ui/views/info/info_model.dart';
 import 'package:planets/ui/views/list_models.dart';
 import 'package:planets/ui/widgets/info_box.dart';
+import 'package:planets/ui/widgets/relation_list.dart';
 
 class PlanetInfoState extends InfoModelScreenState<Planet> {
 
@@ -13,10 +16,24 @@ class PlanetInfoState extends InfoModelScreenState<Planet> {
     Widget info = IconButton(
         color: Colors.white,
         icon: Icon(Icons.info, size: 25),
-        onPressed: () => Navigator.push(context,
-            MaterialPageRoute(builder: (_) =>
-                ListModelsScreen<OrbitCRUD, Orbit>((orbit) => orbit.planet == widget.model.id)
-            )
+        onPressed: () => showDialog(context: context, child:
+          RelationListButton.buildDialog('Relações', context, ListView(
+            shrinkWrap: true,
+            children: <Widget>[
+              ListTile(
+                title: Text('Sistemas Planetários'),
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) =>
+                      ListModelsScreen<SystemCRUD, System>((system) => system.planets.contains(widget.model.id))
+                  ))
+              ),
+              ListTile(
+                title: Text('Órbitas'),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) =>
+                    ListModelsScreen<OrbitCRUD, Orbit>((orbit) => orbit.planet == widget.model.id)
+                )),
+              )
+            ],
+          ))
         )
     );
 

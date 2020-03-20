@@ -46,7 +46,9 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
 
   Iterable<Widget> getFields();
 
-  bool save(context) => true;
+  Future<bool> save(context) async {
+    return true;
+  }
 
   Widget getImage() => Container(
     width: double.maxFinite,
@@ -104,7 +106,7 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                     onPressed: () async {
                                       formKey.currentState.save();
-                                      if (!this.save(context)) return;
+                                      if (!await this.save(context)) return;
                                       Navigator.of(context).pop(editingModel);
                                       if (widget.model != null) {
                                         await Provider.of<U>(context, listen: false).update(editingModel, editingModel.id);

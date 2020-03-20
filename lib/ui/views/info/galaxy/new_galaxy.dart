@@ -66,7 +66,7 @@ class EditGalaxyState extends EditModelScreenState<Galaxy, GalaxyCRUD> {
   );
 
   @override
-  bool save(context) {
+  Future<bool> save(context) async {
     if (this.systems.isNotEmpty)
       editingModel.systems.forEach((id) async {
         var system = systems[id];
@@ -126,7 +126,10 @@ class EditGalaxyState extends EditModelScreenState<Galaxy, GalaxyCRUD> {
           IconButton(
               icon: Icon(Icons.delete),
               onPressed: () {
-                editingModel.systems.remove(model.id);
+                var system = model as System;
+                editingModel.systems.remove(system.id);
+                system.galaxy = null;
+                Provider.of<SystemCRUD>(context, listen: false).update(system, system.id);
                 Navigator.pop(context);
               }
           ),
@@ -142,6 +145,7 @@ class EditGalaxyState extends EditModelScreenState<Galaxy, GalaxyCRUD> {
                   'Sistemas', context, FutureList<System>(
                 future: Provider.of<SystemCRUD>(context, listen: false).fetch(),
                 nameFunction: (system) => system.name,
+                filter: (system) => system.galaxy == null && !editingModel.systems.contains(system.id),
                 onTap: (system) {
                   if (!editingModel.systems.contains(system.id))
                     editingModel.systems.add(system.id);

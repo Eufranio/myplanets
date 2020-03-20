@@ -1,11 +1,31 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:planets/core/services/starCrud.dart';
+import 'package:planets/core/services/systemCrud.dart';
 import 'package:planets/core/viewmodels/star.dart';
+import 'package:planets/core/viewmodels/system.dart';
 import 'package:planets/ui/views/info/edit_model.dart';
 import 'package:planets/ui/widgets/custom_dropdown.dart';
+import 'package:planets/ui/widgets/relation_list.dart';
+import 'package:provider/provider.dart';
 
 class EditStarState extends EditModelScreenState<Star, StarCRUD> {
+
+  var systems = Map<String, System>();
+
+  @override
+  Future<bool> save(context) async {
+    if (this.systems.isNotEmpty)
+      editingModel.systems.forEach((id) async {
+        var system = systems[id];
+        if (!system.stars.contains(editingModel.id)) {
+          system.stars.add(editingModel.id);
+          await Provider.of<SystemCRUD>(context, listen: false).update(system, system.id);
+        }
+      });
+
+    return true;
+  }
 
   @override
   Widget getImage() => Container(
@@ -93,6 +113,64 @@ class EditStarState extends EditModelScreenState<Star, StarCRUD> {
       )).toList()
     );
 
+    var morta = CustomDropdownButtonFormField<bool>(
+        isExpanded: true,
+        onSaved: (val) => editingModel.died = val,
+        onChanged: (_) {},
+        //value: editingModel.died ?? false,
+        decoration: decoration.copyWith(hintText: 'Morta'),
+        items: [
+          DropdownMenuItem(
+            value: true,
+            child: Text('Sim'),
+          ),
+          DropdownMenuItem(
+            value: false,
+            child: Text('Não'),
+          )
+        ]
+    );
+
+    var systemButton = RelationListButton(
+      future: Provider.of<SystemCRUD>(context, listen: false).fetch(),
+      isEmpty: editingModel.systems.isEmpty,
+      title: 'Sistemas',
+      consumer: (list) => this.systems = Map.fromIterable(list.cast<System>(), key: (e) => e.id, value: (e) => e),
+      filter: (model) => editingModel.systems.contains(model.id),
+      trailing: (model) =>
+          IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                var system = model as System;
+                editingModel.systems.remove(system.id);
+                system.stars.remove(editingModel.id);
+                Provider.of<SystemCRUD>(context, listen: false).update(system, system.id);
+                Navigator.pop(context);
+              }
+          ),
+    );
+
+    var addSystem = FlatButton(
+      padding: EdgeInsets.zero,
+      color: Colors.deepPurple[800],
+      child: Icon(Icons.add, color: Colors.white),
+      shape: CircleBorder(),
+      onPressed: () =>
+          showDialog(context: context, builder: (context) =>
+              RelationListButton.buildDialog(
+                  'Sistemas', context, FutureList<System>(
+                future: Provider.of<SystemCRUD>(context, listen: false).fetch(),
+                nameFunction: (system) => system.name,
+                filter: (system) => !system.stars.contains(editingModel.id) && !editingModel.systems.contains(system.id),
+                onTap: (system) {
+                  if (!editingModel.systems.contains(system.id))
+                    editingModel.systems.add(system.id);
+                  Navigator.of(context).pop();
+                },
+              ))
+          ),
+    );
+
     return [
       SizedBox(
         height: 50,
@@ -118,7 +196,7 @@ class EditStarState extends EditModelScreenState<Star, StarCRUD> {
         ),
       ),
       Padding(
-        padding: EdgeInsets.fromLTRB(35, 0, 35, 10),
+        padding: EdgeInsets.fromLTRB(35, 0, 35, 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
@@ -131,6 +209,22 @@ class EditStarState extends EditModelScreenState<Star, StarCRUD> {
               height: 50,
               width: 150,
               child: tipo,
+            )
+          ],
+        ),
+      ),
+      Padding(
+        padding: EdgeInsets.fromLTRB(35, 0, 35, 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            SizedBox(height: 45, width: 120, child: systemButton),
+            //SizedBox(height: 0, width: 1),
+            SizedBox(height: 45, width: 55, child: addSystem),
+            SizedBox(
+              height: 50,
+              width: 150,
+              child: morta,
             )
           ],
         ),

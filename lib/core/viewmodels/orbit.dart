@@ -34,7 +34,7 @@ class Orbit extends Model {
   }
 
   @override
-  Widget getInfo() => null;
+  Widget getInfo() => getEdit();
 
   @override
   Widget getEdit() => EditModelScreen(this, () => Orbit(), () => EditOrbitState());
