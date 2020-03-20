@@ -100,7 +100,7 @@ class ListEntitiesScreen extends StatelessWidget {
           buildButton(context,
               ListEntitiesSpecificScreen<OrbitCRUD>(
                 editScreen: EditModelScreen(null, () => Orbit(), () => EditOrbitState())),
-              'Órbitas', 'assets/list-button-bg.png')
+              'Órbitas', 'assets/list-button-orbit.png')
         ]
     );
   }
