@@ -16,7 +16,28 @@ abstract class InfoModelScreenState<T extends Model> extends State<InfoModelScre
 
   Iterable<Widget> getFields();
 
-  String getImage() => 'assets/planet.png';
+  Widget getImage() => Stack(
+    children: <Widget>[
+      Padding(
+        padding: EdgeInsets.all(20),
+        child: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.fitHeight, image: AssetImage('assets/planet.png'))
+          ),
+        ),
+      ),
+      Positioned(
+          right: 80,
+          bottom: 80,
+          child: Text(widget.model.name, textAlign: TextAlign.right, style: TextStyle(
+            fontSize: 30.0,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ))
+      ),
+    ],
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -39,31 +60,8 @@ abstract class InfoModelScreenState<T extends Model> extends State<InfoModelScre
               ),
               SizedBox(
                 height: 300,
-                width: 300,
-                child: Stack(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(20),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.fill, image: AssetImage(this.getImage())),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 100, right: 50),
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: Text(widget.model.name, textAlign: TextAlign.right, style: TextStyle(
-                          fontSize: 30.0,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        )),
-                      ),
-                    )
-                  ],
-                ),
+                width: double.infinity,
+                child: this.getImage(),
               )
             ].toList() + this.getFields(),
           ),

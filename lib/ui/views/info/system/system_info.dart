@@ -18,7 +18,29 @@ class SystemInfoState extends InfoModelScreenState<System> {
   Galaxy galaxy;
 
   @override
-  String getImage() => 'assets/system.png';
+  Widget getImage() => Stack(
+    children: <Widget>[
+      Padding(
+        padding: EdgeInsets.all(20),
+        child: Container(
+          height: 220,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.fitHeight, image: AssetImage('assets/system.png'))
+          ),
+        ),
+      ),
+      Positioned(
+          right: 40,
+          bottom: 60,
+          child: Text(widget.model.name, textAlign: TextAlign.right, style: TextStyle(
+            fontSize: 30.0,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ))
+      ),
+    ],
+  );
 
   @override
   Iterable<Widget> getFields() {

@@ -1,4 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:planets/ui/views/info/edit_model.dart';
+import 'package:planets/ui/views/info/info_model.dart';
+import 'package:planets/ui/views/info/star/new_star.dart';
+import 'package:planets/ui/views/info/star/star_info.dart';
 
 import 'model.dart';
 
@@ -8,16 +12,15 @@ class Star extends Model {
       name,
       age,
       size,
-      distance,
-      death;
+      distance;
 
-  StarType type;
-
-  bool isBlackHole;
+  bool died;
 
   List<String> systems;
 
-  Star({this.id, this.name, this.age, this.size, this.distance, this.death, this.type, this.systems});
+  StarType type;
+
+  Star({this.id, this.name, this.age, this.size, this.distance, this.type, this.died});
 
   Star.fromMap(String id, Map snapshot) :
         id = id,
@@ -25,7 +28,7 @@ class Star extends Model {
         age = snapshot['age'],
         size = snapshot['size'],
         distance = snapshot['distance'],
-        death = snapshot['death'],
+        died = snapshot['died'],
         type = StarType.values[snapshot['type']],
         systems = List.from(snapshot['systems'] ?? []);
 
@@ -35,15 +38,15 @@ class Star extends Model {
       "age": age,
       "size": size,
       "distance": distance,
-      "death": death,
+      "died": died,
       "type": type.index,
       "systems": systems
     };
   }
 
-  Widget getInfo() => null;
+  Widget getInfo() => InfoModelScreen(this, () => StarInfoState());
 
-  Widget getEdit() => null;
+  Widget getEdit() => EditModelScreen(this, () => Star(), () => EditStarState());
 
 }
 

@@ -42,6 +42,30 @@ class SatelliteInfoState extends InfoModelScreenState<NaturalSatellite> {
       ));
 
   @override
+  Widget getImage() => Stack(
+    children: <Widget>[
+      Padding(
+        padding: EdgeInsets.all(20),
+        child: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.fitHeight, image: AssetImage('assets/satellite.png'))
+          ),
+        ),
+      ),
+      Positioned(
+          right: 80,
+          bottom: 125,
+          child: Text(widget.model.name, textAlign: TextAlign.right, style: TextStyle(
+            fontSize: 30.0,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ))
+      ),
+    ],
+  );
+
+  @override
   Iterable<Widget> getFields() {
 
     Widget info = IconButton(

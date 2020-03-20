@@ -89,7 +89,7 @@ class EditStarState extends EditModelScreenState<Star, StarCRUD> {
       decoration: decoration.copyWith(hintText: 'Tipo'),
       items: StarType.values.map((type) => DropdownMenuItem(
         value: type,
-        child: Text(this.getNameFromType(type)),
+        child: Text(getNameFromType(type)),
       )).toList()
     );
 
@@ -138,7 +138,7 @@ class EditStarState extends EditModelScreenState<Star, StarCRUD> {
     ];
   }
 
-  String getNameFromType(type) {
+  static String getNameFromType(type) {
     switch (type) {
       case StarType.RedDwarf:
         return 'Anã Vermelha';
