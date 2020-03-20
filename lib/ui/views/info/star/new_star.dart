@@ -6,6 +6,15 @@ import 'package:planets/ui/views/info/edit_model.dart';
 import 'package:planets/ui/widgets/custom_dropdown.dart';
 
 class EditStarState extends EditModelScreenState<Star, StarCRUD> {
+
+  @override
+  Widget getImage() => Container(
+    width: double.maxFinite,
+    height: 250,
+    decoration: BoxDecoration(
+      image: DecorationImage(image: AssetImage('assets/star.png'), fit: BoxFit.fitHeight)),
+  );
+
   @override
   String getTitle() {
     return 'Estrela';

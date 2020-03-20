@@ -68,6 +68,14 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD> {
   var galaxies = Map<String, Galaxy>();
 
   @override
+  Widget getImage() => Container(
+    width: 350,
+    height: 250,
+    decoration: BoxDecoration(
+      image: DecorationImage(image: AssetImage('assets/system.png'), fit: BoxFit.contain),),
+  );
+
+  @override
   bool save(context) {
     if (editingModel.galaxy == null) {
       showDialog(

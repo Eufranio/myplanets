@@ -58,6 +58,14 @@ class EditGalaxyState extends EditModelScreenState<Galaxy, GalaxyCRUD> {
   var systems = Map<String, System>();
 
   @override
+  Widget getImage() => Container(
+    height: 300,
+    width: 350,
+    decoration: BoxDecoration(
+      image: DecorationImage(image: AssetImage('assets/galaxy.png'), fit: BoxFit.scaleDown)),
+  );
+
+  @override
   bool save(context) {
     if (this.systems.isNotEmpty)
       editingModel.systems.forEach((id) async {

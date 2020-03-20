@@ -5,6 +5,7 @@ import 'package:planets/core/viewmodels/planetModel.dart';
 import 'package:planets/ui/views/info/edit_model.dart';
 
 class EditPlanetState extends EditModelScreenState<Planet, PlanetCRUD> {
+
   @override
   String getTitle() {
     return 'Planeta';

@@ -88,7 +88,7 @@ class ListEntitiesScreen extends StatelessWidget {
           buildButton(context,
               ListEntitiesSpecificScreen<SatelliteCRUD>(
                   editScreen: EditModelScreen(null, () => NaturalSatellite(), () => EditSatelliteState()),
-                  buttonImage: 'assets/button-search-system.png'),
+                  buttonImage: 'assets/button-search-satellite.png'),
               'Satélites Naturais','assets/list-button-satellite.png'),
 
           buildButton(context,

@@ -7,6 +7,14 @@ import 'package:flutter/services.dart';
 
 class EditSatelliteState extends EditModelScreenState<NaturalSatellite, SatelliteCRUD> {
 
+    @override
+    Widget getImage() => Container(
+      width: double.maxFinite,
+      height: 250,
+      decoration: BoxDecoration(
+        image: DecorationImage(image: AssetImage('assets/satellite.png'), fit: BoxFit.fitHeight),),
+    );
+
   @override
   Iterable<Widget> getFields() {
     var nome = TextFormField(

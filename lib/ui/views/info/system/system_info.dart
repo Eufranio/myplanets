@@ -98,7 +98,7 @@ class SystemInfoState extends InfoModelScreenState<System> {
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          SizedBox(height: 65, width: 85, child: ImageButton(
+          SizedBox(height: 55, width: 132, child: ImageButton(
               image: AssetImage('assets/list-button-bg.png'),
               child: Text('Planetas', style: TextStyle(fontSize: 15)),
               onPressed: () {
@@ -109,8 +109,8 @@ class SystemInfoState extends InfoModelScreenState<System> {
                 );
               }
           )),
-          SizedBox(height: 0, width: 15),
-          SizedBox(height: 65, width: 85, child: ImageButton(
+          SizedBox(height: 0, width: 17),
+          SizedBox(height: 55, width: 132, child: ImageButton(
               image: AssetImage('assets/list-button-star.png'),
               child: Text('Estrelas', style: TextStyle(fontSize: 15)),
               onPressed: () {

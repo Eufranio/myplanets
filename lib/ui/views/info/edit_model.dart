@@ -48,6 +48,13 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
 
   bool save(context) => true;
 
+  Widget getImage() => Container(
+    width: double.maxFinite,
+    height: 250,
+    decoration: BoxDecoration(
+      image: DecorationImage(image: AssetImage('assets/planet.png'), fit: BoxFit.fitHeight)),
+  );
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -68,24 +75,15 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
                             backgroundColor: Colors.transparent,
                             elevation: 0
                         ),
-                        Text(this.getTitle(), style: TextStyle(fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white)),
-                        SizedBox(
-                          height: 70,
-                          width: 100,
+                        Center(
+                          child: Text(this.getTitle(), textAlign: TextAlign.center, style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
+                          )),
                         ),
-                        Container(
-                          width: 150,
-                          height: 150,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(image: AssetImage(
-                                'assets/planet.png'), fit: BoxFit.cover),),
-                        ),
-                        SizedBox(
-                          height: 70,
-                          width: 100,
-                        ),
+                        Center(child: this.getImage()),
+                        SizedBox.fromSize(size: Size.square(30))
                       ] + this.getFields()
                         + [
                           Align(
