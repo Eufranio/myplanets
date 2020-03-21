@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:planets/core/services/orbitCrud.dart';
@@ -15,12 +16,12 @@ import 'package:provider/provider.dart';
 
 class EditOrbitState extends EditModelScreenState<Orbit, OrbitCRUD> {
 
-  static Widget futureBuilder(future) {
+  static Widget futureBuilder(Future<Widget> future) {
     return FutureBuilder(
         future: future,
-        builder: (context, AsyncSnapshot<Model> snapshot) {
+        builder: (context, AsyncSnapshot<Widget> snapshot) {
           if (snapshot.hasData) {
-            return Text(snapshot.data.name, style: TextStyle(fontSize: 25));
+            return snapshot.data;
           }
           return SizedBox.fromSize(
               size: Size.square(10), child: CircularProgressIndicator());
@@ -33,20 +34,27 @@ class EditOrbitState extends EditModelScreenState<Orbit, OrbitCRUD> {
     var starProvider = Provider.of<StarCRUD>(context, listen: false);
     var satelliteProvider = Provider.of<SatelliteCRUD>(context, listen: false);
 
-    return (Orbit val) =>
-        Padding(
-            padding: EdgeInsets.only(top: 8, bottom: 8, left: 30),
-            child: SizedBox.expand(
-              child: Row(
-                children: <Widget>[
-                  val.planet == null ? SizedBox.shrink() : futureBuilder(planetProvider.getById(val.planet)),
-                  val.star == null ? SizedBox.shrink() : futureBuilder(starProvider.getById(val.star)),
-                  val.satellite == null ? SizedBox.shrink() : futureBuilder(satelliteProvider.getById(val.satellite))
-                ],
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              ),
-            )
-        );
+    var func = (Orbit val) {
+      var future = Future.wait([planetProvider.getById(val.planet),
+        starProvider.getById(val.star),
+        satelliteProvider.getById(val.satellite)])
+          .then((value) =>
+          value.where((e) => e != null).map((e) => e.name).join(" • "))
+          .then((value) =>
+          AutoSizeText(value,
+              minFontSize: 18,
+              overflow: TextOverflow.clip,
+              textAlign: TextAlign.center));
+
+      return Padding(
+          padding: EdgeInsets.only(top: 8, bottom: 8, left: 30),
+          child: SizedBox.expand(
+              child: Center(child: futureBuilder(future))
+          )
+      );
+    };
+
+    return func;
   }
 
   var planets = List<Planet>();

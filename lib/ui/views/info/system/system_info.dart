@@ -11,6 +11,7 @@ import 'package:planets/ui/views/info/info_model.dart';
 import 'package:planets/ui/views/list_models.dart';
 import 'package:planets/ui/widgets/image_button.dart';
 import 'package:planets/ui/widgets/info_box.dart';
+import 'package:planets/ui/widgets/relation_list.dart';
 import 'package:provider/provider.dart';
 
 class SystemInfoState extends InfoModelScreenState<System> {
@@ -124,11 +125,18 @@ class SystemInfoState extends InfoModelScreenState<System> {
               image: AssetImage('assets/list-button-bg.png'),
               child: Text('Planetas', style: TextStyle(fontSize: 15)),
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) =>
-                        ListModelsScreen<PlanetCRUD, Planet>((planet) => widget.model.planets.contains(planet.id))
-                    )
-                );
+                if (widget.model.planets.isEmpty) {
+                  showDialog(context: context,
+                      child: RelationListButton.buildDialog(
+                          'Erro', context,
+                          Text('Não há nada para exibir!')));
+                } else {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) =>
+                          ListModelsScreen<PlanetCRUD, Planet>((planet) => widget.model.planets.contains(planet.id))
+                      )
+                  );
+                }
               }
           )),
           SizedBox(height: 0, width: 17),
@@ -136,11 +144,18 @@ class SystemInfoState extends InfoModelScreenState<System> {
               image: AssetImage('assets/list-button-star.png'),
               child: Text('Estrelas', style: TextStyle(fontSize: 15)),
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) =>
-                        ListModelsScreen<StarCRUD, Star>((star) => widget.model.stars.contains(star.id))
-                    )
-                );
+                if (widget.model.stars.isEmpty) {
+                  showDialog(context: context,
+                      child: RelationListButton.buildDialog(
+                          'Erro', context,
+                          Text('Não há nada para exibir!')));
+                } else {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) =>
+                          ListModelsScreen<StarCRUD, Star>((star) => widget.model.stars.contains(star.id))
+                      )
+                  );
+                }
               }
           ))
         ],

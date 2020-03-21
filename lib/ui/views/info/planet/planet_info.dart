@@ -16,25 +16,39 @@ class PlanetInfoState extends InfoModelScreenState<Planet> {
     Widget info = IconButton(
         color: Colors.white,
         icon: Icon(Icons.info, size: 25),
-        onPressed: () => showDialog(context: context, child:
-          RelationListButton.buildDialog('Relações', context, ListView(
-            shrinkWrap: true,
-            children: <Widget>[
-              ListTile(
-                title: Text('Sistemas Planetários'),
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) =>
-                      ListModelsScreen<SystemCRUD, System>((system) => system.planets.contains(widget.model.id))
-                  ))
-              ),
-              ListTile(
-                title: Text('Órbitas'),
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) =>
-                    ListModelsScreen<OrbitCRUD, Orbit>((orbit) => orbit.planet == widget.model.id)
-                )),
-              )
-            ],
-          ))
-        )
+        onPressed: () =>
+            showDialog(context: context, child:
+            RelationListButton.buildDialog('Relações', context, ListView(
+              shrinkWrap: true,
+              children: <Widget>[
+                ListTile(
+                    title: Text('Sistemas Planetários'),
+                    onTap: () {
+                      if (widget.model.systems.isEmpty) {
+                        showDialog(context: context,
+                            child: RelationListButton.buildDialog(
+                                'Erro', context,
+                                Text('Não há nada para exibir!')));
+                      } else {
+                        Navigator.push(
+                            context, MaterialPageRoute(builder: (_) =>
+                            ListModelsScreen<SystemCRUD, System>((system) =>
+                                system.planets.contains(widget.model.id))
+                        ));
+                      }
+                    }
+                ),
+                ListTile(
+                  title: Text('Órbitas'),
+                  onTap: () =>
+                      Navigator.push(context, MaterialPageRoute(builder: (_) =>
+                          ListModelsScreen<OrbitCRUD, Orbit>((orbit) =>
+                          orbit.planet == widget.model.id)
+                      )),
+                )
+              ],
+            ))
+            )
     );
 
     return [
@@ -42,37 +56,45 @@ class PlanetInfoState extends InfoModelScreenState<Planet> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           InfoBox(
-            value: Text(widget.model.size, textAlign: TextAlign.center, style: TextStyle(
-                color: Colors.deepPurple,
-                fontWeight: FontWeight.bold,
-                fontSize: 14)
+            value: Text(widget.model.size, textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.deepPurple,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14)
             ),
-            title: Text('Tamanho', textAlign: TextAlign.center, style: TextStyle(
+            title: Text(
+              'Tamanho', textAlign: TextAlign.center, style: TextStyle(
                 color: Colors.deepPurple,
                 fontSize: 12),
             ),
+            size: 95,
           ),
           InfoBox(
-            value: Text(widget.model.weight, textAlign: TextAlign.center, style: TextStyle(
-                color: Colors.deepPurple,
-                fontWeight: FontWeight.bold,
-                fontSize: 14),
+            value: Text(widget.model.weight, textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Colors.deepPurple,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14),
             ),
             title: Text('Peso', textAlign: TextAlign.center, style: TextStyle(
                 color: Colors.deepPurple,
                 fontSize: 12),
             ),
+            size: 95,
           ),
           InfoBox(
-            value: Text(widget.model.gravity, textAlign: TextAlign.center, style: TextStyle(
-                color: Colors.deepPurple,
-                fontWeight: FontWeight.bold,
-                fontSize: 14),
+            value: Text(widget.model.gravity, textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Colors.deepPurple,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14),
             ),
-            title: Text('Gravidade', textAlign: TextAlign.center, style: TextStyle(
+            title: Text(
+              'Gravidade', textAlign: TextAlign.center, style: TextStyle(
                 color: Colors.deepPurple,
                 fontSize: 12),
             ),
+            size: 95,
           ),
         ],
       ),

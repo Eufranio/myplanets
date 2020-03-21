@@ -153,7 +153,7 @@ class EditStarState extends EditModelScreenState<Star, StarCRUD> {
 
     var systemButton = RelationListButton(
       future: Provider.of<SystemCRUD>(context, listen: false).fetch(),
-      isEmpty: editingModel.systems.isEmpty,
+      isEmpty: editingModel.systems?.isEmpty,
       title: 'Sistemas',
       consumer: (list) => this.systems = Map.fromIterable(list.cast<System>(), key: (e) => e.id, value: (e) => e),
       filter: (model) => editingModel.systems.contains(model.id),

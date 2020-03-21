@@ -152,7 +152,7 @@ class EditGalaxyState extends EditModelScreenState<Galaxy, GalaxyCRUD> {
       isEmpty: editingModel.systems?.isEmpty ?? true,
       title: 'Sistemas',
       consumer: (list) => this.systems = Map.fromIterable(list.cast<System>(), key: (e) => e.id, value: (e) => e),
-      filter: (model) => editingModel.systems.contains(model.id),
+      filter: (model) => editingModel.systems?.contains(model.id),
       trailing: (model) =>
           IconButton(
               icon: Icon(Icons.delete),

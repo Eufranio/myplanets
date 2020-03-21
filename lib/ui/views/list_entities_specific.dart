@@ -38,7 +38,12 @@ class _ListEntitiesSpecificState<T extends CRUD> extends State<ListEntitiesSpeci
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(
               builder: (_) => widget.editScreen
-          )).then((val) {setState(() {});});
+          )).then((val) {
+            setState(() {
+              if (val != null)
+                this.items.clear();
+            });
+          });
         },
         child: Icon(Icons.add),
       ),

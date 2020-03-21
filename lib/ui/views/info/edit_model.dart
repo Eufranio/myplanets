@@ -141,7 +141,7 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
                                     this.onDelete();
                                     await Provider.of<U>(context, listen: false).remove(editingModel.id);
                                     Navigator.of(context).pop();
-                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pop(editingModel);
                                   },
                                 )
                               ),
