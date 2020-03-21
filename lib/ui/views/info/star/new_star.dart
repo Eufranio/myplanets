@@ -62,6 +62,8 @@ class EditStarState extends EditModelScreenState<Star, StarCRUD> {
 
   @override
   Iterable<Widget> getFields() {
+    editingModel.systems ??= [];
+
     var nome = TextFormField(
       onSaved: (val) => editingModel.name = val,
       style: style,

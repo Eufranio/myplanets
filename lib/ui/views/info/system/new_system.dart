@@ -124,6 +124,9 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD> {
 
   @override
   void postSave() async {
+    editingModel.planets ??= [];
+    editingModel.stars ??= [];
+
     var planetProvider = locator<PlanetCRUD>();
     editingModel.planets.forEach((id) async {
       var planet = await planetProvider.getById(id).then((value) => value as Planet);

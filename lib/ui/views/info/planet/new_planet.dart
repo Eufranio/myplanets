@@ -51,6 +51,7 @@ class EditPlanetState extends EditModelScreenState<Planet, PlanetCRUD> {
 
   @override
   Iterable<Widget> getFields() {
+    editingModel.systems ??= [];
     var nome = TextFormField(
       onSaved: (val) => editingModel.name = val,
       style: style,
@@ -118,7 +119,7 @@ class EditPlanetState extends EditModelScreenState<Planet, PlanetCRUD> {
 
     var systemButton = RelationListButton(
       future: Provider.of<SystemCRUD>(context, listen: false).fetch(),
-      isEmpty: editingModel.systems?.isEmpty ?? true,
+      isEmpty: editingModel.systems.isEmpty,
       title: 'Sistemas',
       filter: (model) => editingModel.systems.contains(model.id),
       trailing: (model) =>

@@ -117,6 +117,8 @@ class EditGalaxyState extends EditModelScreenState<Galaxy, GalaxyCRUD> {
 
   @override
   Iterable<Widget> getFields() {
+    editingModel.systems ??= [];
+
     var nome = TextFormField(
       onSaved: (val) => editingModel.name = val,
       style: style,
