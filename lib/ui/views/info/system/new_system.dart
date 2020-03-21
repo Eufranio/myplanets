@@ -64,10 +64,6 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD> {
         );
   }
 
-  var planets = Map<String, Planet>();
-  var stars = Map<String, Star>();
-  var galaxies = Map<String, Galaxy>();
-
   @override
   void onDelete() async {
     var galaxyProvider = Provider.of<GalaxyCRUD>(context, listen: false);
@@ -197,9 +193,6 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD> {
       future: planetProvider.fetch(),
       isEmpty: editingModel.planets.isEmpty,
       title: 'Planetas',
-      consumer: (list) =>
-      planets = Map.fromIterable(
-          list.cast<Planet>(), key: (e) => e.id, value: (e) => e),
       filter: (model) => editingModel.planets.contains(model.id),
       trailing: (model) =>
           IconButton(
@@ -238,9 +231,6 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD> {
         future: starProvider.fetch(),
         isEmpty: editingModel.stars.isEmpty,
         title: 'Estrelas',
-        consumer: (list) =>
-        this.stars = Map.fromIterable(
-            list.cast<Star>(), key: (e) => e.id, value: (e) => e),
         filter: (model) => editingModel.stars.contains(model.id),
         trailing: (model) =>
             IconButton(
@@ -281,7 +271,7 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD> {
       future: galaxyCrud.fetch(),
         builder: (context, AsyncSnapshot<List<Model>> snapshot) {
           if (snapshot.hasData) {
-            this.galaxies = Map.fromIterable(snapshot.data.cast<Galaxy>(), key: (e) => e.id, value: (e) => e);
+            var galaxies = Map.fromIterable(snapshot.data.cast<Galaxy>(), key: (e) => e.id, value: (e) => e);
             return CustomDropdownButtonFormField(
               onSaved: (val) {
                 if (editingModel.galaxy != null) {

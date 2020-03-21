@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:planets/core/services/orbitCrud.dart';
 import 'package:planets/core/services/starCrud.dart';
 import 'package:planets/core/services/systemCrud.dart';
+import 'package:planets/core/viewmodels/orbit.dart';
 import 'package:planets/core/viewmodels/star.dart';
 import 'package:planets/core/viewmodels/system.dart';
+import 'package:planets/locator.dart';
 import 'package:planets/ui/views/info/edit_model.dart';
 import 'package:planets/ui/widgets/custom_dropdown.dart';
 import 'package:planets/ui/widgets/relation_list.dart';
@@ -14,17 +17,34 @@ class EditStarState extends EditModelScreenState<Star, StarCRUD> {
   var systems = Map<String, System>();
 
   @override
-  Future<bool> save(context) async {
-    if (this.systems.isNotEmpty)
-      editingModel.systems.forEach((id) async {
-        var system = systems[id];
-        if (!system.stars.contains(editingModel.id)) {
-          system.stars.add(editingModel.id);
-          await Provider.of<SystemCRUD>(context, listen: false).update(system, system.id);
-        }
-      });
+  void onDelete() async {
+    var systemProvider = Provider.of<SystemCRUD>(context, listen: false);
+    var orbitProvider = Provider.of<OrbitCRUD>(context, listen: false);
 
-    return true;
+    editingModel.systems.forEach((id) =>
+        systemProvider.getById(id).then((value) {
+          var system = value as System;
+          system.stars.remove(editingModel.id);
+          systemProvider.update(system, system.id);
+        }));
+
+    var orbits = await orbitProvider.fetch().then((value) => value.cast<Orbit>());
+    orbits.forEach((orbit) {
+      if (orbit.star == editingModel.id)
+        orbitProvider.remove(orbit.id);
+    });
+  }
+
+  @override
+  void postSave() {
+    var systemProvider = locator<SystemCRUD>();
+    editingModel.systems.forEach((id) async {
+      var system = await systemProvider.getById(id).then((value) => value as System);
+      if (!system.stars.contains(editingModel.id)) {
+        system.stars.add(editingModel.id);
+        await systemProvider.update(system, system.id);
+      }
+    });
   }
 
   @override
@@ -172,60 +192,33 @@ class EditStarState extends EditModelScreenState<Star, StarCRUD> {
     );
 
     return [
-      SizedBox(
-        height: 50,
-        width: 320,
-        child: nome,
-      ),
-      Padding(
-        padding: const EdgeInsets.fromLTRB(35, 20, 35, 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            SizedBox(
-              height: 50,
-              width: 150,
-              child: idade,
-            ),
-            SizedBox(
-              height: 50,
-              width: 150,
-              child: distancia,
-            ),
-          ],
-        ),
-      ),
-      Padding(
-        padding: EdgeInsets.fromLTRB(35, 0, 35, 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            SizedBox(
-              height: 50,
-              width: 150,
-              child: tamanho,
-            ),
-            SizedBox(
-              height: 50,
-              width: 150,
-              child: tipo,
-            )
-          ],
-        ),
-      ),
+      SizedBox(height: 60, width: 320, child: nome),
+      SizedBox(height: 10, width: 1),
+      SizedBox(height: 60, width: 320, child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          SizedBox(height: 60, width: 155, child: idade),
+          SizedBox(height: 60, width: 155, child: distancia),
+        ],
+      )),
+      SizedBox(height: 10, width: 1),
+      SizedBox(height: 60, width: 320, child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          SizedBox(height: 60, width: 155, child: tamanho),
+          SizedBox(height: 60, width: 155, child: tipo)
+        ],
+      )),
+      SizedBox(height: 10, width: 1),
       Padding(
         padding: EdgeInsets.fromLTRB(35, 0, 35, 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             SizedBox(height: 45, width: 120, child: systemButton),
-            //SizedBox(height: 0, width: 1),
             SizedBox(height: 45, width: 55, child: addSystem),
-            SizedBox(
-              height: 50,
-              width: 150,
-              child: morta,
-            )
+            SizedBox(height: 50, width: 150, child: morta)
           ],
         ),
       )

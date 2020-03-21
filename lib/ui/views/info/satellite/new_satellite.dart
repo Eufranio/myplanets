@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:planets/core/services/orbitCrud.dart';
 import 'package:planets/core/services/satelliteCrud.dart';
 import 'package:planets/core/viewmodels/naturalSatellite.dart';
+import 'package:planets/core/viewmodels/orbit.dart';
 import 'package:planets/ui/views/info/edit_model.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 
 class EditSatelliteState extends EditModelScreenState<NaturalSatellite, SatelliteCRUD> {
+
+  @override
+  void onDelete() async {
+    var orbitProvider = Provider.of<OrbitCRUD>(context, listen: false);
+
+    var orbits = await orbitProvider.fetch().then((value) => value.cast<Orbit>());
+    orbits.forEach((orbit) {
+      if (orbit.satellite == editingModel.id)
+        orbitProvider.remove(orbit.id);
+    });
+  }
 
     @override
     Widget getImage() => Container(
