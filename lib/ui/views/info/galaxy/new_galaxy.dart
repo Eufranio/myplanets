@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:planets/core/services/galaxyCrud.dart';
+import 'package:planets/core/services/planetCrud.dart';
+import 'package:planets/core/services/starCrud.dart';
 import 'package:planets/core/services/systemCrud.dart';
 import 'package:planets/core/viewmodels/galaxy.dart';
+import 'package:planets/core/viewmodels/planetModel.dart';
+import 'package:planets/core/viewmodels/star.dart';
 import 'package:planets/core/viewmodels/system.dart';
 import 'package:planets/ui/views/info/edit_model.dart';
 import 'package:planets/ui/widgets/info_box.dart';
@@ -56,6 +60,33 @@ class EditGalaxyState extends EditModelScreenState<Galaxy, GalaxyCRUD> {
   }
 
   var systems = Map<String, System>();
+
+  @override
+  void onDelete() async {
+    var systemProvider = Provider.of<SystemCRUD>(context, listen: false);
+    var planetProvider = Provider.of<PlanetCRUD>(context, listen: false);
+    var starProvider = Provider.of<StarCRUD>(context, listen: false);
+
+    editingModel.systems.forEach((id) =>
+        systemProvider.getById(id).then((value) {
+            var system = value as System;
+            system.planets.forEach((id) =>
+                planetProvider.getById(id).then((value) {
+                  var planet = value as Planet;
+                  planet.systems.remove(system.id);
+                  planetProvider.update(planet, planet.id);
+                }));
+
+            system.stars.forEach((id) =>
+                starProvider.getById(id).then((value) {
+                  var star = value as Star;
+                  star.systems.remove(system.id);
+                  starProvider.update(star, star.id);
+                }));
+
+            systemProvider.remove(system.id);
+        }));
+  }
 
   @override
   Widget getImage() => Container(
@@ -118,7 +149,7 @@ class EditGalaxyState extends EditModelScreenState<Galaxy, GalaxyCRUD> {
 
     var systemButton = RelationListButton(
       future: Provider.of<SystemCRUD>(context, listen: false).fetch(),
-      isEmpty: editingModel.systems.isEmpty,
+      isEmpty: editingModel.systems?.isEmpty ?? true,
       title: 'Sistemas',
       consumer: (list) => this.systems = Map.fromIterable(list.cast<System>(), key: (e) => e.id, value: (e) => e),
       filter: (model) => editingModel.systems.contains(model.id),

@@ -8,6 +8,7 @@ import 'package:planets/core/viewmodels/model.dart';
 import 'package:planets/core/viewmodels/planetModel.dart';
 import 'package:planets/core/viewmodels/star.dart';
 import 'package:planets/core/viewmodels/system.dart';
+import 'package:planets/locator.dart';
 import 'package:planets/ui/views/info/edit_model.dart';
 import 'package:planets/ui/widgets/custom_dropdown.dart';
 import 'package:planets/ui/widgets/info_box.dart';
@@ -68,6 +69,32 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD> {
   var galaxies = Map<String, Galaxy>();
 
   @override
+  void onDelete() async {
+    var galaxyProvider = Provider.of<GalaxyCRUD>(context, listen: false);
+    await galaxyProvider.getById(editingModel.galaxy).then((value) {
+          var galaxy = value as Galaxy;
+          galaxy.systems.remove(editingModel.id);
+          galaxyProvider.update(galaxy, galaxy.id);
+        });
+
+    var planetProvider = Provider.of<PlanetCRUD>(context, listen: false);
+    editingModel.planets.forEach((id) =>
+        planetProvider.getById(id).then((value) {
+          var planet = value as Planet;
+          planet.systems.remove(editingModel.id);
+          planetProvider.update(planet, planet.id);
+        }));
+
+    var starProvider = Provider.of<StarCRUD>(context, listen: false);
+    editingModel.stars.forEach((id) =>
+        starProvider.getById(id).then((value) {
+          var star = value as Star;
+          star.systems.remove(editingModel.id);
+          starProvider.update(star, star.id);
+        }));
+  }
+
+  @override
   Widget getImage() => Container(
     width: 350,
     height: 250,
@@ -96,33 +123,35 @@ class EditSystemState extends EditModelScreenState<System, SystemCRUD> {
       return false;
     }
 
-    if (this.planets.isNotEmpty)
-      editingModel.planets.forEach((id) async {
-        var planet = planets[id];
-        if (!planet.systems.contains(editingModel.id)) {
-          planet.systems.add(editingModel.id);
-          await Provider.of<PlanetCRUD>(context, listen: false).update(
-              planet, planet.id);
-        }
-      });
+    return true;
+  }
 
-    if (this.stars.isNotEmpty)
-      editingModel.stars.forEach((id) async {
-        var star = stars[id];
-        if (!star.systems.contains(editingModel.id)) {
-          star.systems.add(editingModel.id);
-          await Provider.of<StarCRUD>(context, listen: false).update(
-              star, star.id);
-        }
-      });
+  @override
+  void postSave() async {
+    var planetProvider = locator<PlanetCRUD>();
+    editingModel.planets.forEach((id) async {
+      var planet = await planetProvider.getById(id).then((value) => value as Planet);
+      if (!planet.systems.contains(editingModel.id)) {
+        planet.systems.add(editingModel.id);
+        await planetProvider.update(planet, planet.id);
+      }
+    });
 
-    var galaxy = galaxies[editingModel.galaxy];
+    var starProvider = locator<StarCRUD>();
+    editingModel.stars.forEach((id) async {
+      var star = await starProvider.getById(id).then((value) => value as Star);
+      if (!star.systems.contains(editingModel.id)) {
+        star.systems.add(editingModel.id);
+        await starProvider.update(star, star.id);
+      }
+    });
+
+    var galaxyProvider = locator<GalaxyCRUD>();
+    var galaxy = await galaxyProvider.getById(editingModel.galaxy).then((value) => value as Galaxy);
     if (!galaxy.systems.contains(editingModel.id)) {
       galaxy.systems.add(editingModel.id);
-      Provider.of<GalaxyCRUD>(context, listen: false).update(galaxy, galaxy.id);
+      await galaxyProvider.update(galaxy, galaxy.id);
     }
-
-    return true;
   }
 
   @override

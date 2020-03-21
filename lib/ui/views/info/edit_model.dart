@@ -50,6 +50,10 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
     return true;
   }
 
+  void postSave() async {}
+
+  void onDelete() async {}
+
   Widget getImage() => Container(
     width: double.maxFinite,
     height: 250,
@@ -110,8 +114,10 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
                                       Navigator.of(context).pop(editingModel);
                                       if (widget.model != null) {
                                         await Provider.of<U>(context, listen: false).update(editingModel, editingModel.id);
+                                        this.postSave();
                                       } else {
                                         await Provider.of<U>(context, listen: false).addModel(editingModel);
+                                        this.postSave();
                                       }
                                     }
                                   )
@@ -132,6 +138,7 @@ abstract class EditModelScreenState<T extends Model, U extends CRUD> extends Sta
                                   ),
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                   onPressed: () async {
+                                    this.onDelete();
                                     await Provider.of<U>(context, listen: false).remove(editingModel.id);
                                     Navigator.of(context).pop();
                                     Navigator.of(context).pop();

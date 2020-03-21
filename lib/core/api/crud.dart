@@ -36,8 +36,9 @@ abstract class CRUD<T extends ObjectManager<Model>> with ChangeNotifier {
     return;
   }
 
-  Future addModel(Model data) async {
+  Future<Model> addModel(Model data) async {
     var result = await api.addDocument(api.toJson(data));
-    return;
+    data.id = result.documentID;
+    return data;
   }
 }

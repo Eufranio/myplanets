@@ -32,6 +32,7 @@ class RelationListButton extends StatelessWidget {
       },
       trailing: this.trailing,
     );
+    list.build(context);
     return RaisedButton.icon(
       color: Colors.deepPurple[800],
       icon: Icon(Icons.public, size: 20, color: Colors.white,),
