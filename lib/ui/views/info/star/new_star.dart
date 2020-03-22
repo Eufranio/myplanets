@@ -126,7 +126,9 @@ class EditStarState extends EditModelScreenState<Star, StarCRUD> {
     var tipo = CustomDropdownButtonFormField<StarType>(
       isExpanded: true,
       onSaved: (val) => editingModel.type = val,
-      onChanged: (_) {},
+      onChanged: (val) {setState(() {
+        editingModel.type = val;
+      });},
       value: editingModel.type,
       decoration: decoration.copyWith(hintText: 'Tipo'),
       items: StarType.values.map((type) => DropdownMenuItem(
@@ -216,11 +218,18 @@ class EditStarState extends EditModelScreenState<Star, StarCRUD> {
       Padding(
         padding: EdgeInsets.fromLTRB(35, 0, 35, 10),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 45, width: 120, child: systemButton),
-            SizedBox(height: 45, width: 55, child: addSystem),
-            SizedBox(height: 50, width: 150, child: morta)
+            SizedBox(height: 45, width: 175, child: Row(
+              children: <Widget>[
+                SizedBox(height: 45, width: 120, child: systemButton),
+                SizedBox(height: 45, width: 55, child: addSystem)
+              ],
+            ),),
+            Visibility(
+              visible: this.editingModel.type == StarType.RedGiant,
+              child: SizedBox(height: 50, width: 150, child: morta)
+            )
           ],
         ),
       )
